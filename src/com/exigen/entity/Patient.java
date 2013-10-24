@@ -2,16 +2,16 @@ package com.exigen.entity;
 
 public class Patient extends Person {
 
-    private int district;
+    private String district;
     private String diagnosis;
 
-    public Patient(String name, String surname, int district, String diagnosis) {
+    public Patient(String name, String surname, String district, String diagnosis) {
         super(name, surname);
         this.district = district;
         this.diagnosis = diagnosis;
     }
 
-    public int getDistrict() {
+    public String getDistrict() {
         return district;
     }
 
