@@ -8,18 +8,18 @@ import java.util.logging.SimpleFormatter;
 
 public class ClientLogger {
     private static ClientLogger instance = new ClientLogger();
-    private Logger clientLogger;
+    private Logger logger;
 
     private ClientLogger() {
-        this.clientLogger = Logger.getLogger("com.exigen.client");
+        this.logger = Logger.getLogger("com.exigen.client");
         try {
             FileHandler fileHandler = new FileHandler("Client.log");
             fileHandler.setFormatter(new SimpleFormatter());
-            clientLogger.addHandler(fileHandler);
+            logger.addHandler(fileHandler);
             //LEVEL - WARNING
-            clientLogger.setLevel(Level.WARNING);
+            logger.setLevel(Level.WARNING);
         } catch (IOException e) {
-            clientLogger.log(Level.SEVERE, "IO error due log file creation");
+            logger.log(Level.SEVERE, "IO error due client.log file creation");
         }
     }
 
@@ -27,7 +27,7 @@ public class ClientLogger {
         return instance;
     }
 
-    public Logger getClientLogger() {
-        return this.clientLogger;
+    public Logger getLogger() {
+        return this.logger;
     }
 }

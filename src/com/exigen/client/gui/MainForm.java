@@ -4,6 +4,7 @@ import com.exigen.client.ClientConfig;
 import com.exigen.entity.Doctor;
 import com.exigen.entity.DoctorSpecialization;
 import com.exigen.entity.Patient;
+import com.exigen.entity.RegistrationRecord;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,12 +15,18 @@ import java.util.ArrayList;
 
 public class MainForm extends JFrame {
 
+    private final String ADD_BUTTON_LABEL = "Add";
+    private final String DELETE_BUTTON_LABEL = "Remove";
+    private final String SEARCH_BUTTON_LABEL = "Search";
+
     public MainForm() {
         super("Поликлиника v0.1");
+
+
     }
 
     //setting up tabbed pane with 3 tabs: patients, doctors and records
-    private static void setupTabbedPane(Container parent) {
+    public void setupTabbedPane(Container parent) {
         Font font = new Font("Verdana", Font.PLAIN, 10);
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(font);
@@ -30,6 +37,7 @@ public class MainForm extends JFrame {
 
         setupPatientsTab(patientsPanel);
         setupDoctorsTab(doctorsPanel);
+        setupRecordsTab(recordsPanel);
 
         tabbedPane.addTab("Пациенты", patientsPanel);
         tabbedPane.addTab("Врачи", doctorsPanel);
@@ -38,7 +46,7 @@ public class MainForm extends JFrame {
     }
 
     //setting up main menu
-    private static void setupMenuPanel(JFrame frame) {
+    protected void setupMenuPanel(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
         //File menu and its items
         JMenu fileMenu = new JMenu("Файл");
@@ -58,7 +66,41 @@ public class MainForm extends JFrame {
         frame.setJMenuBar(menuBar);
     }
 
-    private static void setupDoctorsTab(Container parent) {
+    protected void setupRecordsTab(Container parent) {
+        final ArrayList<RegistrationRecord> recordstest = new ArrayList<RegistrationRecord>();
+
+        RecordsTableModel model = new RecordsTableModel(recordstest);
+
+        JPanel buttonsPanel = new JPanel();
+        final JTable recordsTable = new JTable(model);
+        JButton addRecordButton = new JButton(ADD_BUTTON_LABEL);
+        JButton deleteRecordButton = new JButton(DELETE_BUTTON_LABEL);
+        JButton searchButtonButton = new JButton(SEARCH_BUTTON_LABEL);
+
+        buttonsPanel.add(addRecordButton);
+        buttonsPanel.add(deleteRecordButton);
+        buttonsPanel.add(searchButtonButton);
+
+        final JScrollPane scrollPane = new JScrollPane(recordsTable);
+
+        parent.setLayout(new BorderLayout());
+        parent.add(buttonsPanel, BorderLayout.NORTH);
+        parent.add(scrollPane, BorderLayout.CENTER);
+
+        deleteRecordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < recordstest.size(); i++) {
+                    if (recordsTable.isRowSelected(i)) {
+                        recordstest.remove(i);
+                        scrollPane.repaint();
+                    }
+                }
+            }
+        });
+    }
+
+    protected void setupDoctorsTab(Container parent) {
         final ArrayList<Doctor> doctorstest = new ArrayList<Doctor>();
         doctorstest.add(new Doctor("Юрий", "Попов", 12, DoctorSpecialization.PROCTOLOGIST));
         doctorstest.add(new Doctor("Елена", "Малышева", 21, DoctorSpecialization.THERAPIST));
@@ -68,9 +110,9 @@ public class MainForm extends JFrame {
 
         JPanel buttonsPanel = new JPanel();
         final JTable doctorsTable = new JTable(model);
-        JButton addDoctorButton = new JButton("Добавить врача");
-        JButton deleteDoctorButton = new JButton("Удалить врача");
-        JButton searchButtonButton = new JButton("Поиск по врачам");
+        JButton addDoctorButton = new JButton(ADD_BUTTON_LABEL);
+        JButton deleteDoctorButton = new JButton(DELETE_BUTTON_LABEL);
+        JButton searchButtonButton = new JButton(SEARCH_BUTTON_LABEL);
 
         buttonsPanel.add(addDoctorButton);
         buttonsPanel.add(deleteDoctorButton);
@@ -95,7 +137,7 @@ public class MainForm extends JFrame {
         });
     }
 
-    private static void setupPatientsTab(Container parent) {
+    protected void setupPatientsTab(Container parent) {
         final ArrayList<Patient> patientstest = new ArrayList<Patient>();
         patientstest.add(new Patient("Андрей", "Пупкин", "Выборгский", "Понос"));
         patientstest.add(new Patient("Вова", "Галимов", "Центральный", "Открытый перелом уха"));
@@ -107,9 +149,9 @@ public class MainForm extends JFrame {
 
         JPanel buttonsPanel = new JPanel();
         final JTable patientsTable = new JTable(model);
-        JButton addPatientButton = new JButton("Добавить пациента");
-        JButton deletePatientButton = new JButton("Удалить пациента");
-        JButton searchPatientButton = new JButton("Поиск пациента");
+        JButton addPatientButton = new JButton(ADD_BUTTON_LABEL);
+        JButton deletePatientButton = new JButton(DELETE_BUTTON_LABEL);
+        JButton searchPatientButton = new JButton(SEARCH_BUTTON_LABEL);
 
         buttonsPanel.add(addPatientButton);
         buttonsPanel.add(deletePatientButton);
@@ -135,7 +177,7 @@ public class MainForm extends JFrame {
     }
 
     public static void setupAndShowGUI() {
-        JFrame frame = new MainForm();
+        MainForm frame = new MainForm();
         ClientConfig cfg = ClientConfig.getInstance();
         int frameWidth = cfg.getMainFrameDefaultWidth();
         int frameHeight = cfg.getMainFrameDefaultHeight();
@@ -144,14 +186,19 @@ public class MainForm extends JFrame {
         frame.setLocation(
                 (int) ((screenSize.getWidth() - frameWidth) / 2),
                 (int) ((screenSize.getHeight() - frameHeight) / 2));
-        setupTabbedPane(frame.getContentPane());
-        setupMenuPanel(frame);
+        frame.setupTabbedPane(frame.getContentPane());
+        frame.setupMenuPanel(frame);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
 
     public static void main(String[] args) {
-        setupAndShowGUI();
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                setupAndShowGUI();
+            }
+        });
     }
 }

@@ -1,6 +1,9 @@
 package com.exigen.server;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -38,9 +41,11 @@ public class Server extends Thread {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-            String data = in.readLine();
-            data = "" + num + ": " + data;
-            out.println(data);
+            String data = "";
+            while (!data.equals("stop")) {
+                data = in.readLine();
+                out.println("" + num + ": " + data);
+            }
             s.close();
         } catch (IOException e) {
             System.out.println("init error: " + e);

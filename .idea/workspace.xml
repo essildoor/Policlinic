@@ -1,24 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="82b76683-95fa-4f14-ba31-61515aad88ab" name="Default" comment="" />
+    <list default="true" id="82b76683-95fa-4f14-ba31-61515aad88ab" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/exigen/server/DBManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/exigen/server/ServerLogger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/derby.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/exigen/client/Client.java" afterPath="$PROJECT_DIR$/src/com/exigen/client/Client.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/exigen/client/ClientConfig.java" afterPath="$PROJECT_DIR$/src/com/exigen/client/ClientConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/exigen/client/ClientLogger.java" afterPath="$PROJECT_DIR$/src/com/exigen/client/ClientLogger.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/exigen/client/gui/MainForm.java" afterPath="$PROJECT_DIR$/src/com/exigen/client/gui/MainForm.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Policlinic.iml" afterPath="$PROJECT_DIR$/Policlinic.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/exigen/server/Server.java" afterPath="$PROJECT_DIR$/src/com/exigen/server/Server.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="Policlinic.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Client.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382532809050" ignored="false" />
-    <file path="/Server.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382532796581" ignored="false" />
+    <file path="/Client.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382639721031" ignored="false" />
+    <file path="/Server.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382639662456" ignored="false" />
     <file path="/ClientHandler.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382524033105" ignored="false" />
     <file path="/Person.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382535737307" ignored="false" />
     <file path="/Doctor.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382535579109" ignored="false" />
     <file path="/DoctorSpecialization.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382535412558" ignored="false" />
     <file path="/Patient.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382619726198" ignored="false" />
     <file path="/RegistrationRecord.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382536124952" ignored="false" />
-    <file path="/MainForm.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382624712448" ignored="false" />
+    <file path="/MainForm.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382639218019" ignored="false" />
     <file path="/ClientConfig.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382608079961" ignored="false" />
     <file path="/ClientLogger.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382608956205" ignored="false" />
     <file path="/PatientsTable.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382619182620" ignored="false" />
     <file path="/DoctorsTableModel.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382622940901" ignored="false" />
     <file path="/PatientsTableModel.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382622174896" ignored="false" />
     <file path="/RecordsTableModel.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382623407778" ignored="false" />
+    <file path="/DBManager.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382653601487" ignored="false" />
+    <file path="/db_install.bat" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382642862680" ignored="false" />
+    <file path="/db_run.bat" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382642868459" ignored="false" />
+    <file path="/Dummy.txt" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382647812237" ignored="false" />
+    <file path="/DB_RUN.BAT" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382644093095" ignored="false" />
+    <file path="/setup.bat" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382645938512" ignored="false" />
+    <file path="/ServerLogger.java" changelist="82b76683-95fa-4f14-ba31-61515aad88ab" time="1382648377015" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +54,13 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="DatabaseView">
+    <flatten value="false" />
+    <groupTables value="false" />
+    <sortChildren value="false" />
+  </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -69,7 +97,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -79,18 +106,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainForm.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/exigen/client/gui/MainForm.java">
+      <file leaf-file-name="DBManager.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/exigen/server/DBManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="105" selection-start="1156" selection-end="1157" vertical-scroll-proportion="0.46928498">
+            <state line="57" column="99" selection-start="2037" selection-end="2037" vertical-scroll-proportion="0.1626575">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1944#1952#0" expanded="true" />
-                <element signature="e#3015#3393#0" expanded="true" />
-                <element signature="e#3382#3383#0" expanded="true" />
-                <element signature="e#3525#3534#0" expanded="true" />
-                <element signature="e#4777#5158#0" expanded="true" />
-                <element signature="e#5147#5148#0" expanded="true" />
+                <element signature="e#1438#1447#0" expanded="true" />
+                <marker date="1382653603557" expanded="true" signature="1566:1579" placeholder="SELECT * FRO..." />
+                <marker date="1382653603557" expanded="true" signature="1566:1580" placeholder="SELECT * FRO..missingValue..." />
+                <marker date="1382653603557" expanded="true" signature="2210:2553" placeholder="INSERT INTO ..." />
+                <marker date="1382653603557" expanded="true" signature="2210:2286" placeholder="INSERT INTO ..." />
+                <marker date="1382653603557" expanded="true" signature="2210:2341" placeholder="INSERT INTO ..." />
+                <marker date="1382653603557" expanded="true" signature="2210:2286" placeholder="INSERT INTO ..." />
               </folding>
             </state>
           </provider>
@@ -103,25 +131,33 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/exigen/server/ClientHandler.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/server/Server.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/client/Client.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/entity/DoctorSpecialization.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/entity/Person.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/entity/Doctor.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/entity/RegistrationRecord.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/client/ClientLogger.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/client/ClientConfig.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/client/MainForm.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/client/gui/PatientsTable.java" />
-        <option value="$PROJECT_DIR$/src/com/exigen/entity/Patient.java" />
         <option value="$PROJECT_DIR$/src/com/exigen/client/gui/DoctorsTableModel.java" />
         <option value="$PROJECT_DIR$/src/com/exigen/client/gui/PatientsTableModel.java" />
         <option value="$PROJECT_DIR$/src/com/exigen/client/gui/RecordsTableModel.java" />
         <option value="$PROJECT_DIR$/src/com/exigen/client/gui/MainForm.java" />
+        <option value="$PROJECT_DIR$/src/com/exigen/server/Server.java" />
+        <option value="$PROJECT_DIR$/src/com/exigen/client/Client.java" />
+        <option value="$PROJECT_DIR$/src/db_install.bat" />
+        <option value="$PROJECT_DIR$/src/db_run.bat" />
+        <option value="$PROJECT_DIR$/db_run.bat" />
+        <option value="$PROJECT_DIR$/db_install.bat" />
+        <option value="$PROJECT_DIR$/DB_RUN.BAT" />
+        <option value="$PROJECT_DIR$/setup.bat" />
+        <option value="$PROJECT_DIR$/src/com/exigen/client/ClientLogger.java" />
+        <option value="$PROJECT_DIR$/src/com/exigen/server/ServerLogger.java" />
+        <option value="db-console:/7c2b7be1/8367e819-c718-48d4-ad6f-0cdfe3268123/" />
+        <option value="$PROJECT_DIR$/src/com/exigen/server/DBManager.java" />
       </list>
     </option>
   </component>
@@ -129,7 +165,26 @@
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1176" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>SQL</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>SqlDialectInspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -138,6 +193,8 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
@@ -158,32 +215,31 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -201,11 +257,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -223,11 +279,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -245,11 +301,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Policlinic" />
+              <option name="myItemId" value="Polyclinic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -271,26 +327,33 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Project" />
     <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="options.lastSelected" value="SQL Dialects" />
     <property name="recentsLimit" value="5" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/db/lib/derby.jar" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
-  <component name="RunManager" selected="Application.MainForm">
+  <component name="RunManager" selected="Application.DBManager">
     <configuration default="false" name="Server" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="com.exigen.server.Server" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
@@ -307,6 +370,7 @@
       <method />
     </configuration>
     <configuration default="false" name="Client" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="com.exigen.client.Client" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
@@ -323,6 +387,7 @@
       <method />
     </configuration>
     <configuration default="false" name="ClientConfig" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="com.exigen.client.ClientConfig" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
@@ -339,7 +404,30 @@
       <method />
     </configuration>
     <configuration default="false" name="MainForm" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="com.exigen.client.gui.MainForm" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Policlinic" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="DBManager" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.exigen.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.exigen.server.DBManager" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -368,20 +456,8 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -408,7 +484,21 @@
       <listeners />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
@@ -423,6 +513,7 @@
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -442,18 +533,26 @@
       <patterns />
       <method />
     </configuration>
-    <list size="4">
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.Server" />
       <item index="1" class="java.lang.String" itemvalue="Application.Client" />
       <item index="2" class="java.lang.String" itemvalue="Application.ClientConfig" />
       <item index="3" class="java.lang.String" itemvalue="Application.MainForm" />
+      <item index="4" class="java.lang.String" itemvalue="Application.DBManager" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Application.MainForm" />
-        <item index="1" class="java.lang.String" itemvalue="Application.ClientConfig" />
-        <item index="2" class="java.lang.String" itemvalue="Application.Client" />
-        <item index="3" class="java.lang.String" itemvalue="Application.Server" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Application.DBManager" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Client" />
+        <item index="2" class="java.lang.String" itemvalue="Application.Server" />
+        <item index="3" class="java.lang.String" itemvalue="Application.MainForm" />
+        <item index="4" class="java.lang.String" itemvalue="Application.ClientConfig" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -493,24 +592,30 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14140876" sideWeight="0.67074525" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32973504" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16168623" sideWeight="0.67026496" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32973504" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16168623" sideWeight="0.67074525" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -583,61 +688,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/exigen/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="57" selection-start="907" selection-end="907" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/exigen/entity/DoctorSpecialization.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="67" selection-start="222" selection-end="222" vertical-scroll-proportion="0.06847936">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/exigen/entity/Person.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="17" selection-start="620" selection-end="620" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/exigen/entity/Doctor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="5" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/exigen/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="57" selection-start="907" selection-end="907" vertical-scroll-proportion="0.46575344">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_45/src.zip!/java/util/logging/FileHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="225" column="11" selection-start="8531" selection-end="8531" vertical-scroll-proportion="-2.9536757">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Client.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="28" selection-start="106" selection-end="106" vertical-scroll-proportion="0.05175038">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/exigen/client/ClientLogger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="904" selection-end="904" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -666,56 +720,167 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/exigen/client/gui/DoctorsTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="28" selection-start="2161" selection-end="2161" vertical-scroll-proportion="0.84592146">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#382#402#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="87" column="28" selection-start="2161" selection-end="2161" vertical-scroll-proportion="0.84592146" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/exigen/client/gui/PatientsTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="36" selection-start="1078" selection-end="1078" vertical-scroll-proportion="0.49647534">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#285#305#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="47" column="36" selection-start="1078" selection-end="1078" vertical-scroll-proportion="0.49647534" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/exigen/client/gui/RecordsTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="28" selection-start="2026" selection-end="2026" vertical-scroll-proportion="0.84387755">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#382#402#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="80" column="28" selection-start="2026" selection-end="2026" vertical-scroll-proportion="0.84387755" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/exigen/server/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="431" selection-end="431" vertical-scroll-proportion="0.0">
+        <state line="25" column="31" selection-start="727" selection-end="727" vertical-scroll-proportion="0.33178654">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/exigen/client/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="42" selection-start="990" selection-end="990" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/exigen/client/ClientLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="50" selection-start="949" selection-end="949" vertical-scroll-proportion="0.6217143">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/exigen/client/gui/MainForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="105" selection-start="1156" selection-end="1157" vertical-scroll-proportion="0.46928498">
+        <state line="200" column="45" selection-start="7727" selection-end="7727" vertical-scroll-proportion="3.4971428">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1944#1952#0" expanded="true" />
-            <element signature="e#3015#3393#0" expanded="true" />
-            <element signature="e#3382#3383#0" expanded="true" />
-            <element signature="e#3525#3534#0" expanded="true" />
-            <element signature="e#4777#5158#0" expanded="true" />
-            <element signature="e#5147#5148#0" expanded="true" />
+            <element signature="e#7608#7737#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/exigen/server/ServerLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="55" selection-start="480" selection-end="480" vertical-scroll-proportion="0.29289427">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PolyclinicDataBase/service.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/exigen/server/DBManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="99" selection-start="2037" selection-end="2037" vertical-scroll-proportion="0.1626575">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1438#1447#0" expanded="true" />
+            <marker date="1382653603557" expanded="true" signature="1566:1579" placeholder="SELECT * FRO..." />
+            <marker date="1382653603557" expanded="true" signature="1566:1580" placeholder="SELECT * FRO..missingValue..." />
+            <marker date="1382653603557" expanded="true" signature="2210:2553" placeholder="INSERT INTO ..." />
+            <marker date="1382653603557" expanded="true" signature="2210:2286" placeholder="INSERT INTO ..." />
+            <marker date="1382653603557" expanded="true" signature="2210:2341" placeholder="INSERT INTO ..." />
+            <marker date="1382653603557" expanded="true" signature="2210:2286" placeholder="INSERT INTO ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>mysql-connector-java-5.1.26-bin</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Policlinic</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>derby</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
 

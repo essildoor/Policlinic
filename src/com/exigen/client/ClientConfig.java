@@ -23,7 +23,7 @@ public class ClientConfig {
 
     private ClientConfig() {
         //logger init
-        logger = ClientLogger.getInstance().getClientLogger();
+        logger = ClientLogger.getInstance().getLogger();
         //load properties
         this.config = new Properties();
         try {

@@ -15,13 +15,16 @@ public class Client extends Thread{
             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
             PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-            System.out.print(">");
-            String text = consoleReader.readLine();
-            out.println(text);
-            //receiving
-            String data = in.readLine();
-            //printing to console
-            System.out.println(data);
+            String text;
+            String data;
+
+            while (true) {
+                System.out.print(">");
+                text = consoleReader.readLine();
+                out.println(text);
+                data = in.readLine();
+                System.out.println(data);
+            }
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
