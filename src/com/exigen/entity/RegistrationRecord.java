@@ -1,8 +1,9 @@
 package com.exigen.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RegistrationRecord {
+public class RegistrationRecord implements Serializable{
 
     private Doctor doctor;
     private Patient patient;
@@ -25,4 +26,6 @@ public class RegistrationRecord {
     public Date getDate() {
         return date;
     }
+
+
 }

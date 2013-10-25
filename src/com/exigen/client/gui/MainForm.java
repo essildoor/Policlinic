@@ -102,7 +102,7 @@ public class MainForm extends JFrame {
 
     protected void setupDoctorsTab(Container parent) {
         final ArrayList<Doctor> doctorstest = new ArrayList<Doctor>();
-        doctorstest.add(new Doctor("Юрий", "Попов", 12, DoctorSpecialization.PROCTOLOGIST));
+        doctorstest.add(new Doctor("Юрий", "Попов", 12, DoctorSpecialization.SURGEON));
         doctorstest.add(new Doctor("Елена", "Малышева", 21, DoctorSpecialization.THERAPIST));
         doctorstest.add(new Doctor("Генадий", "Малахов", 24, DoctorSpecialization.SURGEON));
 

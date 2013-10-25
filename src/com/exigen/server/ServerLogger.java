@@ -13,7 +13,7 @@ public class ServerLogger {
     private ServerLogger() {
         this.logger = Logger.getLogger("com.exigen.server");
         try {
-            FileHandler fileHandler = new FileHandler("Server.log");
+            FileHandler fileHandler = new FileHandler("ServerOld.log");
             fileHandler.setFormatter(new SimpleFormatter());
             logger.addHandler(fileHandler);
             //LEVEL - WARNING

@@ -1,6 +1,8 @@
 package com.exigen.entity;
 
-public class Person implements Comparable {
+import java.io.Serializable;
+
+public class Person implements Comparable, Serializable {
 
     private String name;
     private String surname;

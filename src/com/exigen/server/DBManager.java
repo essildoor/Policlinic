@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 public class DBManager {
 
     private Connection conn;
-    private static DBManager instance = new DBManager();
     private String driver;
     private String dbName;
     private Logger logger;
@@ -20,7 +19,7 @@ public class DBManager {
     private String doctorsTableName;
     private String recordsTableName;
 
-    private DBManager() {
+    public DBManager() {
         logger = ServerLogger.getInstance().getLogger();
         driver = "org.apache.derby.jdbc.EmbeddedDriver";
         dbName = "PolyclinicDataBase";
