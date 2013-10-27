@@ -3,13 +3,14 @@ package com.exigen.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class RegistrationRecord implements Serializable{
+public class Record implements Serializable{
 
     private Doctor doctor;
     private Patient patient;
     private Date date;
+    private int id;
 
-    public RegistrationRecord(Doctor doctor, Patient patient, Date date) {
+    public Record(Doctor doctor, Patient patient, Date date) {
         this.doctor = doctor;
         this.patient = patient;
         this.date = date;
@@ -27,5 +28,11 @@ public class RegistrationRecord implements Serializable{
         return date;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 }

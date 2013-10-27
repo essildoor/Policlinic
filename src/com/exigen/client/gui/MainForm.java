@@ -1,10 +1,11 @@
 package com.exigen.client.gui;
 
+import com.exigen.client.Client;
 import com.exigen.client.ClientConfig;
+import com.exigen.client.ClientLogger;
 import com.exigen.entity.Doctor;
-import com.exigen.entity.DoctorSpecialization;
 import com.exigen.entity.Patient;
-import com.exigen.entity.RegistrationRecord;
+import com.exigen.entity.Record;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,20 +13,87 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static com.exigen.util.ProtocolCodes.*;
+
 
 public class MainForm extends JFrame {
 
     private final String ADD_BUTTON_LABEL = "Add";
     private final String DELETE_BUTTON_LABEL = "Remove";
     private final String SEARCH_BUTTON_LABEL = "Search";
+    private ArrayList<Patient> patientsList;
+    private ArrayList<Doctor> doctorsList;
+    private ArrayList<Record> recordsList;
+    private JLabel statusLabel = new JLabel();
+    private Logger logger;
+    private Client client;
+    private JTable recordsTable;
+    private JTable doctorsTable;
+    private JTable patientsTable;
+    private ClientConfig cfg;
 
-    public MainForm() {
+    protected Client getClient() {
+        return this.client;
+    }
+
+    /**
+     * background thread
+     * performs patients, doctors and records lists update with a specified in client config rate
+     * by default rate is 30 sec
+     */
+    @SuppressWarnings("Unchecked")
+    class BackgroundTablesSyncDaemon extends Thread {
+
+        private int syncRate;
+
+        @Override
+        public void run() {
+            syncRate = cfg.getMainFrameTablesSyncRateMs();
+            try {
+                while (!isInterrupted()) {
+                    Thread.sleep(syncRate);
+                    tablesUpdate();
+                }
+            } catch (InterruptedException e) {
+                logger.log(Level.SEVERE, "main form daemon interrupted");
+                System.out.println("main form daemon interrupted");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void tablesUpdate() {
+        ArrayList tables = (ArrayList) client.sendRequest(REQUEST_ALL_LISTS, null);
+        patientsList = (ArrayList<Patient>) tables.get(0);
+        doctorsList = (ArrayList<Doctor>) tables.get(1);
+        recordsList = (ArrayList<Record>) tables.get(2);
+        patientsTable.setModel(new PatientsTableModel(patientsList));
+        doctorsTable.setModel(new DoctorsTableModel(doctorsList));
+        recordsTable.setModel(new RecordsTableModel(recordsList));
+    }
+
+    public MainForm(Client client) {
         super("Поликлиника v0.1");
-
+        logger = ClientLogger.getInstance().getLogger();
+        this.client = client;
+        patientsList = new ArrayList<Patient>();
+        doctorsList = new ArrayList<Doctor>();
+        recordsList = new ArrayList<Record>();
+        cfg = ClientConfig.getInstance();
+        patientsTable = new JTable(new PatientsTableModel(patientsList));
+        doctorsTable = new JTable(new DoctorsTableModel(doctorsList));
+        recordsTable = new JTable(new RecordsTableModel(recordsList));
 
     }
 
-    //setting up tabbed pane with 3 tabs: patients, doctors and records
+    /**
+     * setting up tabbed pane with 3 tabs: patients, doctors and records
+     *
+     * @param parent parent container
+     */
     public void setupTabbedPane(Container parent) {
         Font font = new Font("Verdana", Font.PLAIN, 10);
         JTabbedPane tabbedPane = new JTabbedPane();
@@ -34,19 +102,29 @@ public class MainForm extends JFrame {
         JPanel patientsPanel = new JPanel();
         JPanel doctorsPanel = new JPanel();
         JPanel recordsPanel = new JPanel();
-
+        JStatusBar statusBar = new JStatusBar();
+        statusLabel.setFont(font);
+        statusBar.add(statusLabel);
+        //inits tables data before form opening
+        tablesUpdate();
+        //seting up tabs
         setupPatientsTab(patientsPanel);
         setupDoctorsTab(doctorsPanel);
         setupRecordsTab(recordsPanel);
-
+        //adding tabs to the parent pane
         tabbedPane.addTab("Пациенты", patientsPanel);
         tabbedPane.addTab("Врачи", doctorsPanel);
         tabbedPane.addTab("Регистратура", recordsPanel);
-        parent.add(tabbedPane);
+        parent.add(tabbedPane, BorderLayout.CENTER);
+        parent.add(statusBar, BorderLayout.SOUTH);
     }
 
-    //setting up main menu
-    protected void setupMenuPanel(JFrame frame) {
+    /**
+     * setting up main menu bar
+     *
+     * @param frame main frame reference
+     */
+    private void setupMenuPanel(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
         //File menu and its items
         JMenu fileMenu = new JMenu("Файл");
@@ -66,13 +144,16 @@ public class MainForm extends JFrame {
         frame.setJMenuBar(menuBar);
     }
 
-    protected void setupRecordsTab(Container parent) {
-        final ArrayList<RegistrationRecord> recordstest = new ArrayList<RegistrationRecord>();
-
-        RecordsTableModel model = new RecordsTableModel(recordstest);
+    /**
+     * setting up tab with records table and ect
+     *
+     * @param parent parent container
+     */
+    private void setupRecordsTab(Container parent) {
 
         JPanel buttonsPanel = new JPanel();
-        final JTable recordsTable = new JTable(model);
+
+        JScrollPane recordsScrollPane = new JScrollPane(recordsTable);
         JButton addRecordButton = new JButton(ADD_BUTTON_LABEL);
         JButton deleteRecordButton = new JButton(DELETE_BUTTON_LABEL);
         JButton searchButtonButton = new JButton(SEARCH_BUTTON_LABEL);
@@ -81,35 +162,26 @@ public class MainForm extends JFrame {
         buttonsPanel.add(deleteRecordButton);
         buttonsPanel.add(searchButtonButton);
 
-        final JScrollPane scrollPane = new JScrollPane(recordsTable);
-
         parent.setLayout(new BorderLayout());
         parent.add(buttonsPanel, BorderLayout.NORTH);
-        parent.add(scrollPane, BorderLayout.CENTER);
+        parent.add(recordsScrollPane, BorderLayout.CENTER);
 
         deleteRecordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < recordstest.size(); i++) {
-                    if (recordsTable.isRowSelected(i)) {
-                        recordstest.remove(i);
-                        scrollPane.repaint();
-                    }
-                }
+
             }
         });
     }
 
-    protected void setupDoctorsTab(Container parent) {
-        final ArrayList<Doctor> doctorstest = new ArrayList<Doctor>();
-        doctorstest.add(new Doctor("Юрий", "Попов", 12, DoctorSpecialization.SURGEON));
-        doctorstest.add(new Doctor("Елена", "Малышева", 21, DoctorSpecialization.THERAPIST));
-        doctorstest.add(new Doctor("Генадий", "Малахов", 24, DoctorSpecialization.SURGEON));
-
-        DoctorsTableModel model = new DoctorsTableModel(doctorstest);
-
+    /**
+     * setting up tab with doctors table and ect
+     *
+     * @param parent parent container
+     */
+    private void setupDoctorsTab(Container parent) {
         JPanel buttonsPanel = new JPanel();
-        final JTable doctorsTable = new JTable(model);
+        JScrollPane doctorsScrollPane = new JScrollPane(doctorsTable);
         JButton addDoctorButton = new JButton(ADD_BUTTON_LABEL);
         JButton deleteDoctorButton = new JButton(DELETE_BUTTON_LABEL);
         JButton searchButtonButton = new JButton(SEARCH_BUTTON_LABEL);
@@ -118,37 +190,40 @@ public class MainForm extends JFrame {
         buttonsPanel.add(deleteDoctorButton);
         buttonsPanel.add(searchButtonButton);
 
-        final JScrollPane scrollPane = new JScrollPane(doctorsTable);
-
         parent.setLayout(new BorderLayout());
         parent.add(buttonsPanel, BorderLayout.NORTH);
-        parent.add(scrollPane, BorderLayout.CENTER);
+        parent.add(doctorsScrollPane, BorderLayout.CENTER);
+
+        addDoctorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new AddDoctorDialog(MainForm.this, statusLabel));
+            }
+        });
 
         deleteDoctorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < doctorstest.size(); i++) {
-                    if (doctorsTable.isRowSelected(i)) {
-                        doctorstest.remove(i);
-                        scrollPane.repaint();
-                    }
+                if ((Integer) client.sendRequest(REQUEST_DELETE_DOCTOR,
+                        doctorsList.get(doctorsTable.getSelectedRow())) == OK) {
+                    tablesUpdate();
+                    statusLabelMessage("Doctor deleted");
+                } else {
+                    tablesUpdate();
+                    statusLabelMessage("error");
                 }
             }
         });
     }
 
-    protected void setupPatientsTab(Container parent) {
-        final ArrayList<Patient> patientstest = new ArrayList<Patient>();
-        patientstest.add(new Patient("Андрей", "Пупкин", "Выборгский", "Понос"));
-        patientstest.add(new Patient("Вова", "Галимов", "Центральный", "Открытый перелом уха"));
-        patientstest.add(new Patient("Вася", "Печенькин", "Калининский", "Запор"));
-        patientstest.add(new Patient("Вахтанг", "Джигитов", "Невский", "Головная боль"));
-        patientstest.add(new Patient("Самуил", "Картошкин", "Выборгский", "Вывих носа"));
-
-        PatientsTableModel model = new PatientsTableModel(patientstest);
-
+    /**
+     * setting up patients tab with table and ect
+     *
+     * @param parent parent container
+     */
+    private void setupPatientsTab(final Container parent) {
         JPanel buttonsPanel = new JPanel();
-        final JTable patientsTable = new JTable(model);
+        JScrollPane patientsScrollPane = new JScrollPane(patientsTable);
         JButton addPatientButton = new JButton(ADD_BUTTON_LABEL);
         JButton deletePatientButton = new JButton(DELETE_BUTTON_LABEL);
         JButton searchPatientButton = new JButton(SEARCH_BUTTON_LABEL);
@@ -157,27 +232,42 @@ public class MainForm extends JFrame {
         buttonsPanel.add(deletePatientButton);
         buttonsPanel.add(searchPatientButton);
 
-        final JScrollPane scrollPane = new JScrollPane(patientsTable);
-
         parent.setLayout(new BorderLayout());
         parent.add(buttonsPanel, BorderLayout.NORTH);
-        parent.add(scrollPane, BorderLayout.CENTER);
+        parent.add(patientsScrollPane, BorderLayout.CENTER);
+
+        addPatientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new AddPatientDialog(MainForm.this, statusLabel));
+            }
+        });
 
         deletePatientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < patientstest.size(); i++) {
-                    if (patientsTable.isRowSelected(i)) {
-                        patientstest.remove(i);
-                        scrollPane.repaint();
-                    }
+                if ((Integer) client.sendRequest(REQUEST_DELETE_PATIENT,
+                        patientsList.get(patientsTable.getSelectedRow())) == OK) {
+                    tablesUpdate();
+                    statusLabelMessage("Patient deleted");
+                } else {
+                    tablesUpdate();
+                    statusLabelMessage("error");
                 }
             }
         });
     }
 
-    public static void setupAndShowGUI() {
-        MainForm frame = new MainForm();
+    private void statusLabelMessage(String message) {
+        statusLabel.setText(message);
+        statusLabel.repaint();
+    }
+
+    /**
+     * setting up all components to main frame
+     */
+    public static void setupAndShowGUI(Client client) {
+        final MainForm frame = new MainForm(client);
         ClientConfig cfg = ClientConfig.getInstance();
         int frameWidth = cfg.getMainFrameDefaultWidth();
         int frameHeight = cfg.getMainFrameDefaultHeight();
@@ -186,19 +276,15 @@ public class MainForm extends JFrame {
         frame.setLocation(
                 (int) ((screenSize.getWidth() - frameWidth) / 2),
                 (int) ((screenSize.getHeight() - frameHeight) / 2));
+        frame.setLayout(new BorderLayout());
         frame.setupTabbedPane(frame.getContentPane());
         frame.setupMenuPanel(frame);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                setupAndShowGUI();
-            }
-        });
+        //starts daemon thread which syncs table data from server
+        /*BackgroundTablesSyncDaemon syncDaemon = frame.new BackgroundTablesSyncDaemon();
+        syncDaemon.setDaemon(true);
+        syncDaemon.start();*/
     }
 }

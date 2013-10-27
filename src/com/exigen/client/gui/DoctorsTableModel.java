@@ -1,7 +1,6 @@
 package com.exigen.client.gui;
 
 import com.exigen.entity.Doctor;
-import com.exigen.entity.DoctorSpecialization;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -45,8 +44,6 @@ public class DoctorsTableModel implements TableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if (columnIndex == 3)
-            return DoctorSpecialization.class;
         if (columnIndex == 2)
             return Integer.class;
         return String.class;

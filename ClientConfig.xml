@@ -3,6 +3,7 @@
 <properties>
 <entry key="mainFrameDefaultHeight">600</entry>
 <entry key="mainFrameDefaultWidth">800</entry>
-<entry key="portNumber">3177</entry>
+<entry key="portNumber">4545</entry>
 <entry key="hostName">localhost</entry>
+<entry key="mainFrameTablesSyncRateMs">10000</entry>
 </properties>

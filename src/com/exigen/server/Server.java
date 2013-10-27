@@ -12,6 +12,7 @@ public class Server {
 
     public void start(int port) throws IOException {
         final ServerSocket ss = new ServerSocket(port);
+        System.out.println("Server started");
         while (!executor.isShutdown()) {
             executor.submit(new ConnectionHandler(ss.accept()));
         }

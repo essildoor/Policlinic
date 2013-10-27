@@ -6,6 +6,7 @@ public class Person implements Comparable, Serializable {
 
     private String name;
     private String surname;
+    private int id;
 
     public Person(String name, String surname) {
         this.name = name;
@@ -18,6 +19,14 @@ public class Person implements Comparable, Serializable {
 
     public String getSurname() {
         return surname;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

@@ -8,14 +8,13 @@ import java.util.logging.Logger;
 
 public class ClientConfig {
 
-    private Logger logger;
     private static ClientConfig instance = new ClientConfig();
-
-    private Properties config;
+    //Properties variables
     private int mainFrameDefaultWidth = 800;
     private int mainFrameDefaultHeight = 600;
-    private String hostName = "localhost";
-    private int portNumber = 3177;
+    private String host = "localhost";
+    private int port = 4545;
+    private int mainFrameTablesSyncRateMs = 30000;
 
     public static ClientConfig getInstance() {
         return instance;
@@ -23,22 +22,28 @@ public class ClientConfig {
 
     private ClientConfig() {
         //logger init
-        logger = ClientLogger.getInstance().getLogger();
+        Logger logger = ClientLogger.getInstance().getLogger();
         //load properties
-        this.config = new Properties();
+        Properties config = new Properties();
         try {
             config.loadFromXML(new FileInputStream("ClientConfig.xml"));
             this.mainFrameDefaultWidth =
                     Integer.parseInt(config.getProperty("mainFrameDefaultWidth"));
             this.mainFrameDefaultHeight =
                     Integer.parseInt(config.getProperty("mainFrameDefaultHeight"));
-            this.hostName = config.getProperty("hostName");
-            this.portNumber = Integer.parseInt(config.getProperty("portNumber"));
+            this.host = config.getProperty("hostName");
+            this.port = Integer.parseInt(config.getProperty("portNumber"));
+            this.mainFrameTablesSyncRateMs =
+                    Integer.parseInt(config.getProperty("mainFrameTablesSyncRateMs"));
             logger.log(Level.INFO, "ClientConfig initialized successfully");
         } catch (IOException e) {
             logger.log(Level.WARNING, "IO error due reading ClientConfig.xml\n" +
                     "default values are applied");
         }
+    }
+
+    public int getMainFrameTablesSyncRateMs() {
+        return mainFrameTablesSyncRateMs;
     }
 
     public int getMainFrameDefaultWidth() {
@@ -49,11 +54,11 @@ public class ClientConfig {
         return mainFrameDefaultHeight;
     }
 
-    public String getHostName() {
-        return hostName;
+    public String getHost() {
+        return host;
     }
 
-    public int getPortNumber() {
-        return portNumber;
+    public int getPort() {
+        return port;
     }
 }

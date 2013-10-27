@@ -1,6 +1,6 @@
 package com.exigen.client.gui;
 
-import com.exigen.entity.RegistrationRecord;
+import com.exigen.entity.Record;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -12,9 +12,9 @@ import java.util.Set;
 public class RecordsTableModel implements TableModel {
 
     private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
-    private List<RegistrationRecord> recordsList;
+    private List<Record> recordsList;
 
-    public RecordsTableModel(List<RegistrationRecord> recordsList) {
+    public RecordsTableModel(List<Record> recordsList) {
         this.recordsList = recordsList;
     }
 
@@ -53,7 +53,7 @@ public class RecordsTableModel implements TableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        RegistrationRecord r = recordsList.get(rowIndex);
+        Record r = recordsList.get(rowIndex);
         SimpleDateFormat format = new SimpleDateFormat("dd / MM / yyyy, hh:mm");
         switch (columnIndex) {
             case 0:

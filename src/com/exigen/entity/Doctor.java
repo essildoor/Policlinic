@@ -3,9 +3,10 @@ package com.exigen.entity;
 public class Doctor extends Person{
 
     private int room;
-    private DoctorSpecialization specialization;
+    private String specialization;
+    private int recordsCount;
 
-    public Doctor(String name, String surname, int room, DoctorSpecialization specialization) {
+    public Doctor(String name, String surname, int room, String specialization) {
         super(name, surname);
         this.room = room;
         this.specialization = specialization;
@@ -15,7 +16,15 @@ public class Doctor extends Person{
         return room;
     }
 
-    public DoctorSpecialization getSpecialization() {
+    public String getSpecialization() {
         return specialization;
+    }
+
+    public int getRecordsCount() {
+        return recordsCount;
+    }
+
+    public void setRecordsCount(int recordsCount) {
+        this.recordsCount = recordsCount;
     }
 }
