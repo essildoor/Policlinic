@@ -108,6 +108,7 @@ public class AddPatientDialog extends JDialog implements Runnable {
                 dispose();
             }
         });
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);
     }

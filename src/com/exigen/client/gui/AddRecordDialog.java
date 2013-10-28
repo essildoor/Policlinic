@@ -5,6 +5,8 @@ import com.exigen.entity.Doctor;
 import com.exigen.entity.Patient;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.OceanTheme;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,18 +36,8 @@ public class AddRecordDialog extends JDialog implements Runnable {
 
     @Override
     public void run() {
-        //todo:
-        //1) REQUEST_DOCTOR_SPECIALIZATION_LIST and its functionality on all layers  X
-        //2) REQUEST_DOCTOR_LIST with a param, specialization (String)               X
-        //3) record adding flow:
-        //3.1) choose patient from table (? table)
-        //3.2) choose doctor specialization from list (see 1) )
-        //3.3) choose doctor from doctors list (see 2) ) (? constraints by count of records on date)
-        //3.4) choose date
-        //3.5) press Ok
-
-        int width = 500;
-        int height = 600;
+        int width = 350;
+        int height = 520;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(
                 (int) ((screenSize.getWidth() - width) / 2),
@@ -54,9 +46,12 @@ public class AddRecordDialog extends JDialog implements Runnable {
         pane.setLayout(new BorderLayout(10, 10));
         setPreferredSize(new Dimension(width, height));
 
-        JPanel patientPanel = new JPanel(new GridLayout(1, 2, 10, 10));
-        JPanel datePanel = new JPanel(new GridLayout(1, 2, 10, 10));
-        JPanel doctorPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        JPanel patientPanel = new JPanel();
+        JPanel datePanel = new JPanel();
+        JPanel doctorPanel = new JPanel();
+        patientPanel.setLayout(new BoxLayout(patientPanel, BoxLayout.Y_AXIS));
+        datePanel.setLayout(new BoxLayout(datePanel, BoxLayout.Y_AXIS));
+        doctorPanel.setLayout(new BoxLayout(doctorPanel, BoxLayout.Y_AXIS));
 
         //patient section setup
         JPanel dataPanel1 = new JPanel(new GridLayout(4, 2, 10, 10));
@@ -87,11 +82,10 @@ public class AddRecordDialog extends JDialog implements Runnable {
         dataPanel1.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder("Patient details"),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        patientPanel.add(buttonPanel1);
-        JPanel viewPanel1 = new JPanel(new FlowLayout());
+        JPanel viewPanel1 = new JPanel(new GridLayout(1, 1));
         viewPanel1.add(dataPanel1);
         patientPanel.add(viewPanel1);
-
+        patientPanel.add(buttonPanel1);
 
         //date section setup
         JPanel dataPanel2 = new JPanel(new GridLayout(1, 2, 10, 10));
@@ -110,10 +104,10 @@ public class AddRecordDialog extends JDialog implements Runnable {
                 BorderFactory.createTitledBorder("Date details"),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         buttonPanel2.setAlignmentX(CENTER_ALIGNMENT);
-        datePanel.add(buttonPanel2);
-        JPanel viewPanel2 = new JPanel(new FlowLayout());
+        JPanel viewPanel2 = new JPanel(new GridLayout(1, 1));
         viewPanel2.add(dataPanel2);
         datePanel.add(viewPanel2);
+        datePanel.add(buttonPanel2);
 
         //doctor section setup
         JPanel dataPanel3 = new JPanel(new GridLayout(4, 2, 10, 10));
@@ -144,15 +138,27 @@ public class AddRecordDialog extends JDialog implements Runnable {
                 BorderFactory.createTitledBorder("Doctor details"),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         buttonPanel3.setAlignmentX(CENTER_ALIGNMENT);
-        doctorPanel.add(buttonPanel3);
-        JPanel viewPanel3 = new JPanel(new FlowLayout());
+        JPanel viewPanel3 = new JPanel(new GridLayout(1, 1));
         viewPanel3.add(dataPanel3);
         doctorPanel.add(viewPanel3);
+        doctorPanel.add(buttonPanel3);
 
-        pane.setLayout(new BorderLayout(10, 10));
-        pane.add(patientPanel, BorderLayout.NORTH);
-        pane.add(datePanel, BorderLayout.CENTER);
-        pane.add(doctorPanel, BorderLayout.SOUTH);
+        JButton okButton = new JButton("Ok");
+        JButton cancelButton = new JButton("Cancel");
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonsPanel.add(okButton);
+        buttonsPanel.add(cancelButton);
+
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        pane.add(patientPanel);
+        pane.add(datePanel);
+        pane.add(doctorPanel);
+        pane.add(new JLabel());
+        pane.add(new JSeparator(JSeparator.HORIZONTAL));
+        pane.add(buttonsPanel);
+
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
         pack();
         setVisible(true);
     }
