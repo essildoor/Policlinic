@@ -1,13 +1,11 @@
 package com.exigen.client;
 
 import com.exigen.client.gui.MainForm;
-import com.exigen.entity.Doctor;
-import com.exigen.entity.Patient;
-import com.exigen.entity.Record;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +30,6 @@ public class Client {
             s = new Socket(host, port);
             objInp = new ObjectInputStream(s.getInputStream());
             objOut = new ObjectOutputStream(s.getOutputStream());
-
             //launches main form instance related to current client instance
             MainForm.setupAndShowGUI(this);
         } catch (IOException e) {
@@ -55,46 +52,73 @@ public class Client {
      */
     public synchronized Object sendRequest(int request, Object param) {
         try {
-        objOut.writeInt(request);
-        objOut.flush();
-        int response = objInp.readInt();
-        if (response == OK)
-            switch (request) {
-                case REQUEST_ALL_LISTS:
-                    return receiveAllLists();
-                case REQUEST_PATIENTS_LIST:
-                    return receivePatientsList();
-                case REQUEST_DOCTORS_LIST:
-                    return receiveDoctorsList();
-                case REQUEST_RECORDS_LIST:
-                    return receiveRecordsList();
-                case REQUEST_ADD_PATIENT: {
-                    objOut.writeObject(param);
-                    objOut.flush();
-                    return objInp.readInt();
+            objOut.writeInt(request);
+            objOut.flush();
+            int response = objInp.readInt();
+            if (response == OK)
+                switch (request) {
+                    case REQUEST_ALL_LISTS:
+                        objOut.writeObject(null);
+                        objOut.flush();
+                        return objInp.readObject();
+                    case REQUEST_PATIENTS_LIST:
+                        return objInp.readObject();
+                    case REQUEST_DOCTORS_LIST:
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readObject();
+                    case REQUEST_RECORDS_LIST:
+                        return objInp.readObject();
+                    case REQUEST_ADD_PATIENT: {
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readInt();
+                    }
+                    case REQUEST_ADD_DOCTOR: {
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readInt();
+                    }
+                    case REQUEST_ADD_RECORD: {
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readInt();
+                    }
+                    case REQUEST_DELETE_PATIENT: {
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readInt();
+                    }
+                    case REQUEST_DELETE_DOCTOR: {
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readInt();
+                    }
+                    case REQUEST_DELETE_RECORD: {
+
+                    }
+                    case REQUEST_EDIT_PATIENT: {
+
+                    }
+                    case REQUEST_EDIT_DOCTOR: {
+
+                    }
+                    case REQUEST_SEARCH_PATIENT: {
+
+                    }
+                    case REQUEST_SEARCH_DOCTOR: {
+
+                    }
+                    case REQUEST_SEARCH_RECORD: {
+
+                    }
+                    case REQUEST_DOCTOR_SPECIALIZATION_LIST: {
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readObject();
+                    }
                 }
-                case REQUEST_ADD_DOCTOR:  {
-                    objOut.writeObject(param);
-                    objOut.flush();
-                    return objInp.readInt();
-                }
-                case REQUEST_ADD_RECORD: {
-                    objOut.writeObject(param);
-                    objOut.flush();
-                    return objInp.readInt();
-                }
-                case REQUEST_DELETE_PATIENT: {
-                    objOut.writeObject(param);
-                    objOut.flush();
-                    return objInp.readInt();
-                }
-                case REQUEST_DELETE_DOCTOR: {
-                    objOut.writeObject(param);
-                    objOut.flush();
-                    return objInp.readInt();
-                }
-            }
-        System.out.println("server response is not OK");
+            System.out.println("server response is not OK");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -102,50 +126,4 @@ public class Client {
         }
         return null;
     }
-
-    /**
-     * receives all tables data from server
-     *
-     * @return ArrayList with 3 Lists: patients, doctors and records
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    private ArrayList receiveAllLists() throws IOException, ClassNotFoundException {
-        return (ArrayList) objInp.readObject();
-    }
-
-    /**
-     * receives patients list from server
-     *
-     * @return ArrayList of Patient instances
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    private ArrayList<Patient> receivePatientsList() throws IOException, ClassNotFoundException {
-        return (ArrayList<Patient>) objInp.readObject();
-    }
-
-    /**
-     * receives doctors list from server
-     *
-     * @return ArrayList of Doctor instances
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    private ArrayList<Doctor> receiveDoctorsList() throws IOException, ClassNotFoundException {
-        return (ArrayList<Doctor>) objInp.readObject();
-    }
-
-    /**
-     * receives records list from server
-     *
-     * @return ArrayList of Record instances
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    private ArrayList<Record> receiveRecordsList() throws IOException, ClassNotFoundException {
-        return (ArrayList<Record>) objInp.readObject();
-    }
-
-
 }

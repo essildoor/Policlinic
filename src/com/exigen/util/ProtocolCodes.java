@@ -25,4 +25,6 @@ public class ProtocolCodes {
     public static final int REQUEST_SEARCH_DOCTOR = 24;
     public static final int REQUEST_SEARCH_RECORD = 34;
 
+    public static final int REQUEST_DOCTOR_SPECIALIZATION_LIST = 25;
+
 }

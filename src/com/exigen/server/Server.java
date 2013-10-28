@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Server {
-    private final int THREAD_POOL_SIZE = 2;
+    private final int THREAD_POOL_SIZE = 5;
     private ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
     public void start(int port) throws IOException {

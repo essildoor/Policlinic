@@ -166,6 +166,12 @@ public class MainForm extends JFrame {
         parent.add(buttonsPanel, BorderLayout.NORTH);
         parent.add(recordsScrollPane, BorderLayout.CENTER);
 
+        addRecordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*SwingUtilities.invokeLater(new AddRecordDialog(MainForm.this, statusLabel));*/
+            }
+        });
         deleteRecordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
