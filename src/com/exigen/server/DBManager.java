@@ -325,7 +325,28 @@ public class DBManager {
         java.util.Date date = record.getDate();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Statement stmt = conn.createStatement();
-        //checks if specified doctor already has 5 records on specified date
+        //checks if specified doctor still exist
+        String query = "SELECT COUNT(doctor_id) FROM " + doctorsTableName;
+        ResultSet rs = stmt.executeQuery(query);
+        if (!rs.next() || rs.getInt(1) == 0)
+            return false;
+        query = "SELECT COUNT(record_id) FROM " + recordsTableName +
+                " WHERE doctor_id=" + doctor_id + " AND rec_date='" + format.format(date) + "'";
+        rs = stmt.executeQuery(query);
+        if (rs.next() && rs.getInt(1) >= 5)
+            return false;
+        //checks if specified patient exist
+        query = "SELECT COUNT(patient_id) FROM " + patientsTableName;
+        rs = stmt.executeQuery(query);
+        if (!rs.next() || rs.getInt(1) == 0)
+            return false;
+        String update = "INSERT INTO " + recordsTableName + " (" +
+                "doctor_id, patient_id, rec_date) VALUES (" +
+                doctor_id + ", " + patient_id + ", '" + format.format(date) + "')";
+        stmt.executeUpdate(update);
+        rs.close();
+        stmt.close();
+        /*//checks if specified doctor already has 5 records on specified date
         String query = "SELECT COUNT(doctor_id) AS rec_count_on_date FROM " + recordsTableName +
                 " WHERE doctor_id=" + doctor_id + " AND rec_date='" + format.format(date) + "'";
         ResultSet rs = stmt.executeQuery(query);
@@ -351,7 +372,7 @@ public class DBManager {
         stmt.executeUpdate(updt);
         stmt.executeUpdate(updateRCount);
         rs.close();
-        stmt.close();
+        stmt.close();*/
         return true;
     }
 

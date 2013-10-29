@@ -25,10 +25,12 @@ public class AddRecordDialog extends JDialog implements Runnable {
     private Client client;
     private JLabel statusLabel;
     private ArrayList<Doctor> doctorsList;
+    private MainForm form;
 
 
     public AddRecordDialog(MainForm form, JLabel statusLabel) {
         this.statusLabel = statusLabel;
+        this.form = form;
         client = form.getClient();
     }
 
@@ -182,8 +184,8 @@ public class AddRecordDialog extends JDialog implements Runnable {
         doctorPanel.add(viewPanel3);
         //doctorPanel.add(buttonPanel3);
 
-        JButton okButton = new JButton("Ok");
-        JButton cancelButton = new JButton("Cancel");
+        JButton okButton = new JButton("Принять");
+        JButton cancelButton = new JButton("Отмена");
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonsPanel.add(okButton);
         buttonsPanel.add(cancelButton);
@@ -236,6 +238,7 @@ public class AddRecordDialog extends JDialog implements Runnable {
                         if ((Integer) client.sendRequest(REQUEST_ADD_RECORD, record) == OK) {
                             statusLabel.setText("Регистрационная запись успешно добавлена");
                             statusLabel.repaint();
+                            form.tablesUpdate();
                             setVisible(false);
                             dispose();
                         } else {

@@ -23,19 +23,16 @@ import static com.exigen.util.ProtocolCodes.*;
 
 public class MainForm extends JFrame {
 
-    private final String ADD_BUTTON_LABEL = "Add";
-    private final String DELETE_BUTTON_LABEL = "Remove";
-    private final String SEARCH_BUTTON_LABEL = "Search";
     private ArrayList<Patient> patientsList;
     private ArrayList<Doctor> doctorsList;
     private ArrayList<Record> recordsList;
     private JLabel statusLabel = new JLabel();
-    private Logger logger;
     private Client client;
     private JTable recordsTable;
     private JTable doctorsTable;
     private JTable patientsTable;
     private ClientConfig cfg;
+    private Logger logger;
 
     protected Client getClient() {
         return this.client;
@@ -61,7 +58,6 @@ public class MainForm extends JFrame {
                 }
             } catch (InterruptedException e) {
                 logger.log(Level.SEVERE, "main form daemon interrupted");
-                System.out.println("main form daemon interrupted");
                 e.printStackTrace();
             }
         }
@@ -78,7 +74,7 @@ public class MainForm extends JFrame {
     }
 
     public MainForm(Client client) {
-        super("Поликлиника v0.1");
+        super("Поликлиника v0.8");
         logger = ClientLogger.getInstance().getLogger();
         this.client = client;
         patientsList = new ArrayList<Patient>();
@@ -88,7 +84,7 @@ public class MainForm extends JFrame {
         patientsTable = new JTable(new PatientsTableModel(patientsList));
         doctorsTable = new JTable(new DoctorsTableModel(doctorsList));
         recordsTable = new JTable(new RecordsTableModel(recordsList));
-
+        logger = ClientLogger.getInstance().getLogger();
     }
 
     /**
@@ -109,7 +105,7 @@ public class MainForm extends JFrame {
         statusBar.add(statusLabel);
         //inits tables data before form opening
         tablesUpdate();
-        //seting up tabs
+        //setting up tabs
         setupPatientsTab(patientsPanel);
         setupDoctorsTab(doctorsPanel);
         setupRecordsTab(recordsPanel);
@@ -130,14 +126,12 @@ public class MainForm extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         //File menu and its items
         JMenu fileMenu = new JMenu("Файл");
-        fileMenu.setMnemonic(KeyEvent.VK_F);
         menuBar.add(fileMenu);
 
         JMenuItem connectItem = new JMenuItem("Подключиться");
         fileMenu.add(connectItem);
         //Help menu and its items
         JMenu helpMenu = new JMenu("Справка");
-        helpMenu.setMnemonic(KeyEvent.VK_H);
         menuBar.add(helpMenu);
 
         JMenuItem helpItem = new JMenuItem("Справка");
@@ -154,37 +148,34 @@ public class MainForm extends JFrame {
     private void setupRecordsTab(Container parent) {
 
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        //sets header click sorting
+        patientsTable.setAutoCreateRowSorter(true);
 
         JScrollPane recordsScrollPane = new JScrollPane(recordsTable);
         JButton addRecordButton = new JButton();
         JButton deleteRecordButton = new JButton();
         JButton searchRecordButton = new JButton();
-        JButton sortRecordButton = new JButton();
         JButton settingsButton = new JButton();
 
 
         ImageIcon addIcon = createIcon("addIcon32.png");
         ImageIcon deleteIcon = createIcon("deleteIcon32.png");
         ImageIcon searchIcon = createIcon("searchIcon32.png");
-        ImageIcon sortIcon = createIcon("sortIcon32.png");
         ImageIcon settingsIcon = createIcon("settingsIcon32.png");
 
         addRecordButton.setIcon(addIcon);
         deleteRecordButton.setIcon(deleteIcon);
         searchRecordButton.setIcon(searchIcon);
-        sortRecordButton.setIcon(sortIcon);
         settingsButton.setIcon(settingsIcon);
 
         addRecordButton.setToolTipText("Add new record");
         deleteRecordButton.setToolTipText("Delete record");
         searchRecordButton.setToolTipText("Search records");
-        sortRecordButton.setToolTipText("Sort by..");
         settingsButton.setToolTipText("Settings");
 
         buttonsPanel.add(addRecordButton);
         buttonsPanel.add(deleteRecordButton);
         buttonsPanel.add(searchRecordButton);
-        buttonsPanel.add(sortRecordButton);
         buttonsPanel.add(new JSeparator(JSeparator.VERTICAL));
         buttonsPanel.add(settingsButton);
 
@@ -212,7 +203,7 @@ public class MainForm extends JFrame {
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("File not found " + path);
+
             return null;
         }
     }
@@ -224,40 +215,37 @@ public class MainForm extends JFrame {
      */
     private void setupDoctorsTab(Container parent) {
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        //sets header click sorting
+        patientsTable.setAutoCreateRowSorter(true);
         JScrollPane doctorsScrollPane = new JScrollPane(doctorsTable);
         JButton addDoctorButton = new JButton();
         JButton editDoctorButton = new JButton();
         JButton deleteDoctorButton = new JButton();
         JButton searchDoctorButton = new JButton();
-        JButton sortDoctorButton = new JButton();
         JButton settingsButton = new JButton();
 
         ImageIcon addIcon = createIcon("addIcon32.png");
         ImageIcon editIcon = createIcon("editIcon32.png");
         ImageIcon deleteIcon = createIcon("deleteIcon32.png");
         ImageIcon searchIcon = createIcon("searchIcon32.png");
-        ImageIcon sortIcon = createIcon("sortIcon32.png");
         ImageIcon settingsIcon = createIcon("settingsIcon32.png");
 
         addDoctorButton.setIcon(addIcon);
         editDoctorButton.setIcon(editIcon);
         deleteDoctorButton.setIcon(deleteIcon);
         searchDoctorButton.setIcon(searchIcon);
-        sortDoctorButton.setIcon(sortIcon);
         settingsButton.setIcon(settingsIcon);
 
         addDoctorButton.setToolTipText("Add doctor");
         editDoctorButton.setToolTipText("Edit doctor");
         deleteDoctorButton.setToolTipText("Delete doctor");
         searchDoctorButton.setToolTipText("Search doctors");
-        sortDoctorButton.setToolTipText("Sort by..");
         settingsButton.setToolTipText("Settings");
 
         buttonsPanel.add(addDoctorButton);
         buttonsPanel.add(editDoctorButton);
         buttonsPanel.add(deleteDoctorButton);
         buttonsPanel.add(searchDoctorButton);
-        buttonsPanel.add(sortDoctorButton);
         buttonsPanel.add(new JSeparator(JSeparator.VERTICAL));
         buttonsPanel.add(settingsButton);
 
@@ -278,10 +266,12 @@ public class MainForm extends JFrame {
                 if ((Integer) client.sendRequest(REQUEST_DELETE_DOCTOR,
                         doctorsList.get(doctorsTable.getSelectedRow())) == OK) {
                     tablesUpdate();
-                    statusLabelMessage("Doctor deleted");
+                    statusLabelMessage("Доктор удален");
+                    logger.log(Level.FINEST, "Doctor successfully deleted");
                 } else {
                     tablesUpdate();
-                    statusLabelMessage("error");
+                    logger.log(Level.WARNING, "Couldn't delete doctor");
+                    statusLabelMessage("Ошибка при попытке удаления доктора");
                 }
             }
         });
@@ -294,40 +284,37 @@ public class MainForm extends JFrame {
      */
     private void setupPatientsTab(final Container parent) {
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        //sets header click sorting
+        patientsTable.setAutoCreateRowSorter(true);
         JScrollPane patientsScrollPane = new JScrollPane(patientsTable);
         JButton addPatientButton = new JButton();
         JButton editPatientButton = new JButton();
         JButton deletePatientButton = new JButton();
         JButton searchPatientButton = new JButton();
-        JButton sortPatientButton = new JButton();
         JButton settingsButton = new JButton();
 
         ImageIcon addIcon = createIcon("addIcon32.png");
         ImageIcon editIcon = createIcon("editIcon32.png");
         ImageIcon deleteIcon = createIcon("deleteIcon32.png");
         ImageIcon searchIcon = createIcon("searchIcon32.png");
-        ImageIcon sortIcon = createIcon("sortIcon32.png");
         ImageIcon settingsIcon = createIcon("settingsIcon32.png");
 
         addPatientButton.setIcon(addIcon);
         editPatientButton.setIcon(editIcon);
         deletePatientButton.setIcon(deleteIcon);
         searchPatientButton.setIcon(searchIcon);
-        sortPatientButton.setIcon(sortIcon);
         settingsButton.setIcon(settingsIcon);
 
         addPatientButton.setToolTipText("Add patient");
         editPatientButton.setToolTipText("Edit patient");
         deletePatientButton.setToolTipText("Delete patient");
         searchPatientButton.setToolTipText("Search patient");
-        sortPatientButton.setToolTipText("Sort by..");
         settingsButton.setToolTipText("Settings");
 
         buttonsPanel.add(addPatientButton);
         buttonsPanel.add(editPatientButton);
         buttonsPanel.add(deletePatientButton);
         buttonsPanel.add(searchPatientButton);
-        buttonsPanel.add(sortPatientButton);
         JPanel sep = new JPanel();
         sep.add(new JSeparator(SwingConstants.VERTICAL));
         buttonsPanel.add(sep);
@@ -350,11 +337,20 @@ public class MainForm extends JFrame {
                 if ((Integer) client.sendRequest(REQUEST_DELETE_PATIENT,
                         patientsList.get(patientsTable.getSelectedRow())) == OK) {
                     tablesUpdate();
-                    statusLabelMessage("Patient deleted");
+                    logger.log(Level.FINEST, "Patient deleted");
+                    statusLabelMessage("Пациент удален");
                 } else {
                     tablesUpdate();
-                    statusLabelMessage("error");
+                    logger.log(Level.WARNING, "Couldn't delete patient");
+                    statusLabelMessage("Ошибка при попытке удаления пациента");
                 }
+            }
+        });
+
+        searchPatientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
@@ -382,6 +378,7 @@ public class MainForm extends JFrame {
         frame.setupTabbedPane(frame.getContentPane());
         frame.setupMenuPanel(frame);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.logger.log(Level.FINEST, "Main form initialization completed");
         frame.pack();
         frame.setVisible(true);
         //starts daemon thread which syncs table data from server

@@ -56,13 +56,13 @@ public class AddDoctorDialog extends JDialog implements Runnable{
         room = new JFormattedTextField(f);
         specialization = new JTextField();
 
-        JLabel nameLabel = new JLabel("Name");
-        JLabel surnameLabel = new JLabel("Surname");
-        JLabel roomLabel = new JLabel("Room (format: XX, where X is a digit)");
-        JLabel specializationLabel = new JLabel("Specialization");
+        JLabel nameLabel = new JLabel("Имя");
+        JLabel surnameLabel = new JLabel("Фамилия");
+        JLabel roomLabel = new JLabel("Кабинет");
+        JLabel specializationLabel = new JLabel("Специальность");
 
-        JButton okButton = new JButton("Ok");
-        JButton cancelButton = new JButton("Cancel");
+        JButton okButton = new JButton("Принять");
+        JButton cancelButton = new JButton("Отмена");
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 2, 10, 10));
@@ -80,7 +80,7 @@ public class AddDoctorDialog extends JDialog implements Runnable{
         panel.add(cancelButton);
 
         pane.add(panel, BorderLayout.CENTER);
-        JLabel label = new JLabel("Add new doctor");
+        JLabel label = new JLabel("Добавить доктора");
         label.setHorizontalAlignment(JLabel.CENTER);
         pane.add(label, BorderLayout.NORTH);
         pane.add(new JLabel(), BorderLayout.SOUTH);
@@ -100,10 +100,10 @@ public class AddDoctorDialog extends JDialog implements Runnable{
                         specialization.length() != 0) {
                     doctor = new Doctor(name, surname, room, specialization);
                     if ((Integer) client.sendRequest(REQUEST_ADD_DOCTOR, doctor) == OK) {
-                        statusLabel.setText("Doctor successfully added");
+                        statusLabel.setText("Доктор был успешно добавлен");
                         statusLabel.repaint();
                     } else {
-                        statusLabel.setText("Doctor didn't added, log file updated");
+                        statusLabel.setText("Доктор не был добавлен");
                         statusLabel.repaint();
                     }
                     form.tablesUpdate();

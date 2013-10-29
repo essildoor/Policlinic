@@ -122,10 +122,14 @@ public class Client {
                         return objInp.readObject();
                     }
                     case REQUEST_SEARCH_DOCTOR: {
-
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readObject();
                     }
                     case REQUEST_SEARCH_RECORD: {
-
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readObject();
                     }
                     case REQUEST_DOCTOR_SPECIALIZATION_LIST: {
                         return objInp.readObject();

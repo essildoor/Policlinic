@@ -5,6 +5,7 @@ import com.exigen.entity.Record;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,11 +33,11 @@ public class RecordsTableModel implements TableModel {
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "Doctor";
+                return "Врач";
             case 1:
-                return "Patient";
+                return "Пациент";
             case 2:
-                return "Date";
+                return "Дата";
         }
         return "";
     }
@@ -54,12 +55,12 @@ public class RecordsTableModel implements TableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Record r = recordsList.get(rowIndex);
-        SimpleDateFormat format = new SimpleDateFormat("dd / MM / yyyy, hh:mm");
+        SimpleDateFormat format = new SimpleDateFormat("dd / MM / yyyy");
         switch (columnIndex) {
             case 0:
-                return r.getDoctor();
+                return r.getDoctor().getSurname() + " " + r.getDoctor().getName().charAt(0) + ".";
             case 1:
-                return r.getPatient();
+                return r.getPatient().getSurname() + " " + r.getPatient().getName().charAt(0) + ".";
             case 2:
                 return format.format(r.getDate());
         }

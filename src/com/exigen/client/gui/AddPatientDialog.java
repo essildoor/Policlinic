@@ -58,14 +58,14 @@ public class AddPatientDialog extends JDialog implements Runnable {
         diagnosis = new JTextField();
         insuranceId = new JFormattedTextField(f);
 
-        JLabel nameLabel = new JLabel("Name");
-        JLabel surnameLabel = new JLabel("Surname");
-        JLabel districtLabel = new JLabel("District");
-        JLabel diagnosisLabel = new JLabel("Diagnosis");
-        JLabel insuranceIdLabel = new JLabel("Insurance ID");
+        JLabel nameLabel = new JLabel("Имя");
+        JLabel surnameLabel = new JLabel("Фамилия");
+        JLabel districtLabel = new JLabel("Участок");
+        JLabel diagnosisLabel = new JLabel("Диагноз");
+        JLabel insuranceIdLabel = new JLabel("Номер полиса");
 
-        JButton okButton = new JButton("Ok");
-        JButton cancelButton = new JButton("Cancel");
+        JButton okButton = new JButton("Принять");
+        JButton cancelButton = new JButton("Отмена");
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(7, 2, 10, 10));
@@ -85,7 +85,7 @@ public class AddPatientDialog extends JDialog implements Runnable {
         panel.add(cancelButton);
 
         pane.add(panel, BorderLayout.CENTER);
-        JLabel label = new JLabel("Add new patient");
+        JLabel label = new JLabel("Добавить пациента");
         label.setHorizontalAlignment(JLabel.CENTER);
         pane.add(label, BorderLayout.NORTH);
         pane.add(new JLabel(), BorderLayout.SOUTH);
@@ -105,10 +105,10 @@ public class AddPatientDialog extends JDialog implements Runnable {
                         diagnosis.length() != 0) {
                     patient = new Patient(name, surname, district, diagnosis, insuranceId);
                     if ((Integer) client.sendRequest(REQUEST_ADD_PATIENT, patient) == OK) {
-                        statusLabel.setText("Patient successfully added");
+                        statusLabel.setText("Пациент успешно добавлен");
                         statusLabel.repaint();
                     } else {
-                        statusLabel.setText("Patient didn't added");
+                        statusLabel.setText("Пациент не был добавлен");
                         statusLabel.repaint();
                     }
                     form.tablesUpdate();
