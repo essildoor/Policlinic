@@ -1,5 +1,6 @@
 package com.exigen.client.gui;
 
+import com.alee.laf.WebLookAndFeel;
 import com.exigen.client.Client;
 import com.exigen.entity.Doctor;
 
@@ -31,6 +32,7 @@ public class AddDoctorDialog extends JDialog implements Runnable{
 
     @Override
     public void run() {
+        WebLookAndFeel.install();
         int width = 400;
         int height = 300;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

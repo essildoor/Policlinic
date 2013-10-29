@@ -21,26 +21,36 @@ public class Client {
     private Logger logger;
 
     public Client() {
+        String host = "";
+        int port = 0;
         try {
             //establishes connection to server with a specified params
             logger = ClientLogger.getInstance().getLogger();
             cfg = ClientConfig.getInstance();
-            int port = cfg.getPort();
-            String host = cfg.getHost();
+            port = cfg.getPort();
+            host = cfg.getHost();
             s = new Socket(host, port);
             objInp = new ObjectInputStream(s.getInputStream());
             objOut = new ObjectOutputStream(s.getOutputStream());
             //launches main form instance related to current client instance
             MainForm.setupAndShowGUI(this);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error in Client init " + e.getMessage());
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Couldn't connect to socket " + host + ":" + port);
+            //e.printStackTrace();
         }
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Client client = new Client();
+        /*BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int request;
+        while (true) {
+            System.out.print(">");
+            request = Integer.parseInt(br.readLine());
+            Object o = client.sendRequest(request, null);
+            System.out.println("object = " + o);
+        }*/
     }
 
     /**
@@ -52,13 +62,16 @@ public class Client {
      */
     public synchronized Object sendRequest(int request, Object param) {
         try {
+            System.out.println("sendRequest: request=" + request + ", param=" + param);
             objOut.writeInt(request);
             objOut.flush();
+            System.out.println("sendRequest: request dispatched");
             int response = objInp.readInt();
+            System.out.println("sendRequest: response=" + response);
             if (response == OK)
                 switch (request) {
                     case REQUEST_ALL_LISTS:
-                        objOut.writeObject(null);
+                        objOut.writeObject(param);
                         objOut.flush();
                         return objInp.readObject();
                     case REQUEST_PATIENTS_LIST:
@@ -104,7 +117,9 @@ public class Client {
 
                     }
                     case REQUEST_SEARCH_PATIENT: {
-
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readObject();
                     }
                     case REQUEST_SEARCH_DOCTOR: {
 
@@ -113,8 +128,6 @@ public class Client {
 
                     }
                     case REQUEST_DOCTOR_SPECIALIZATION_LIST: {
-                        objOut.writeObject(param);
-                        objOut.flush();
                         return objInp.readObject();
                     }
                 }

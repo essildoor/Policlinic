@@ -62,10 +62,10 @@ public class DBManager {
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         try {
-            rs = stmt.executeQuery("SELECT * FROM " + patientsTableName + " ORDER BY surname");
+            rs = stmt.executeQuery("SELECT * FROM " + patientsTableName + " ORDER BY patient_surname");
             while (rs.next()) {
                 Patient patient = new Patient(rs.getString(2), rs.getString(3), rs.getString(4),
-                        rs.getString(5));
+                        rs.getString(5), rs.getInt(6));
                 patient.setId(rs.getInt(1));
                 patientsList.add(patient);
             }
@@ -84,11 +84,13 @@ public class DBManager {
      * @param param doctor specialization or null
      * @return Doctor list
      */
-    public synchronized ArrayList<Doctor> getDoctorsList(Object param) throws SQLException {
+    public synchronized ArrayList<Doctor> getDoctorsList(String param) throws SQLException {
         //appends to query data to select only doctors with specified specialization
+        System.out.println("getDoctorsList: entering. param=" + param);
         String appendix = "";
-        if (param != null && param instanceof String)
-            appendix = " WHERE specialization=" + param;
+        if (param != null)
+            appendix = " WHERE specialization='" + param + "'";
+        System.out.println("getDoctorsList: appendix=" + appendix);
         ArrayList<Doctor> doctorsList = new ArrayList<Doctor>();
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
@@ -129,30 +131,30 @@ public class DBManager {
             Record record;
             Patient patient;
             Doctor doctor;
-            rsRecordsIds = stmt.executeQuery("SELECT record_id FROM " + recordsTableName +
-                    " ORDER BY doctor_id");
             rsPatients =
                     stmt.executeQuery("SELECT * FROM " + patientsTableName + " WHERE patient_id=" +
                             "(SELECT patient_id FROM " + recordsTableName + ")");
-            rsDoctors = stmt.executeQuery("SELECT * FROM " + doctorsTableName + " WHERE doctor_id=" +
-                    "(SELECT doctor_id FROM " + recordsTableName + ")");
-            rsDates = stmt.executeQuery("SELECT date FROM " + recordsTableName);
             while (rsPatients.next()) {
                 patient = new Patient(rsPatients.getString(2), rsPatients.getString(3),
-                        rsPatients.getString(4), rsPatients.getString(5));
+                        rsPatients.getString(4), rsPatients.getString(5), rsPatients.getInt(6));
                 patient.setId(rsPatients.getInt(1));
                 patients.add(patient);
             }
+            rsDoctors = stmt.executeQuery("SELECT * FROM " + doctorsTableName + " WHERE doctor_id=" +
+                    "(SELECT doctor_id FROM " + recordsTableName + ")");
             while (rsDoctors.next()) {
                 doctor = new Doctor(rsDoctors.getString(2), rsDoctors.getString(3),
                         rsDoctors.getInt(4), rsDoctors.getString(5));
                 doctor.setRecordsCount(rsDoctors.getInt(6));
                 doctors.add(doctor);
             }
+            rsDates = stmt.executeQuery("SELECT rec_date FROM " + recordsTableName);
             while (rsDates.next()) {
                 dates.add(rsDates.getDate(1));
             }
             int i = 0;
+            rsRecordsIds = stmt.executeQuery("SELECT record_id FROM " + recordsTableName +
+                    " ORDER BY doctor_id");
             while (rsRecordsIds.next()) {
                 record = new Record(doctors.get(i), patients.get(i), dates.get(i));
                 record.setId(rsRecordsIds.getInt(1));
@@ -208,6 +210,56 @@ public class DBManager {
         return true;
     }
 
+    public synchronized ArrayList<Patient> search(Patient patient) throws SQLException {
+        if (patient == null)
+            return null;
+        System.out.println("search patient: entering. parameter=" + patient);
+        ArrayList<Patient> result = new ArrayList<Patient>();
+        Patient p;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = null;
+
+        try {
+            if (patient.getInsuranceId() != 0) {
+                System.out.println("search patient: patient != null && insuranceId != 0");
+                String query = "SELECT * FROM " + patientsTableName + " WHERE insurance_id=" +
+                        patient.getInsuranceId();
+                rs = stmt.executeQuery(query);
+                p = new Patient(
+                        rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)
+                );
+                p.setId(rs.getInt(1));
+                result.add(p);
+            } else {
+                System.out.println("search patient: search by name, or surname or..");
+                String queryBase = "SELECT * FROM " + patientsTableName;
+                String appendix = "";
+                if (patient.getName() != null)
+                    appendix = " WHERE patient_name='" + patient.getName() + "'";
+                if (patient.getSurname() != null)
+                    appendix = " WHERE patient_surname='" + patient.getSurname() + "'";
+                if (patient.getDistrict() != null)
+                    appendix = " WHERE district='" + patient.getDistrict() + "'";
+                if (patient.getDiagnosis() != null)
+                    appendix = " WHERE diagnosis='" + patient.getDiagnosis() + "'";
+                System.out.println("search patient: query=" + queryBase + appendix);
+                rs = stmt.executeQuery(queryBase + appendix);
+                while (rs.next()) {
+                    p = new Patient(rs.getString(2), rs.getString(3), rs.getString(4),
+                            rs.getString(5), rs.getInt(6));
+                    p.setId(rs.getInt(1));
+                    result.add(p);
+                }
+            }
+        } finally {
+            if (rs != null)
+                rs.close();
+            stmt.close();
+        }
+        System.out.println("search patient: leaving. result size=" + result.size());
+        return result;
+    }
+
     /**
      * adds new patient to patients DB
      *
@@ -216,15 +268,24 @@ public class DBManager {
      */
     public synchronized boolean add(Patient patient) throws SQLException {
         Statement stmt = conn.createStatement();
+        int insuranceId = patient.getInsuranceId();
         try {
+            String query = "SELECT insurance_id FROM " + patientsTableName;
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                if (rs.getInt(1) == insuranceId)
+                    return false;
+            }
             String update =
                     "INSERT INTO " + patientsTableName + " (" +
-                            "patient_surname, patient_name, district, diagnosis) " + "VALUES ('" +
-                            patient.getSurname() + "', '" +
+                            "patient_name, patient_surname, district, diagnosis, insurance_id) " +
+                            "VALUES ('" +
                             patient.getName() + "', '" +
+                            patient.getSurname() + "', '" +
                             patient.getDistrict() + "', '" +
-                            patient.getDiagnosis() +
-                            "')";
+                            patient.getDiagnosis() + "', " +
+                            patient.getInsuranceId() +
+                            ")";
             stmt.executeUpdate(update);
         } finally {
             stmt.close();
@@ -243,14 +304,14 @@ public class DBManager {
         try {
             String update =
                     "INSERT INTO " + doctorsTableName + " (" +
-                            "doctor_surname, doctor_name, room, specialization, records_count) " +
+                            "doctor_name, doctor_surname, room, specialization, records_count) " +
                             "VALUES ('" +
-                            doctor.getSurname() + "', '" +
-                            doctor.getName() + "', " +
+                            doctor.getName() + "', '" +
+                            doctor.getSurname() + "', " +
                             doctor.getRoom() + ", '" +
-                            doctor.getSpecialization() +
+                            doctor.getSpecialization() + "', " +
                             doctor.getRecordsCount() +
-                            "')";
+                            ")";
             stmt.executeUpdate(update);
         } finally {
             stmt.close();
@@ -262,22 +323,29 @@ public class DBManager {
         int patient_id = record.getPatient().getId();
         int doctor_id = record.getDoctor().getId();
         java.util.Date date = record.getDate();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Statement stmt = conn.createStatement();
         //checks if specified doctor already has 5 records on specified date
         String query = "SELECT COUNT(doctor_id) AS rec_count_on_date FROM " + recordsTableName +
-                "WHERE doctor_id=" + doctor_id + " AND date=" + date;
+                " WHERE doctor_id=" + doctor_id + " AND rec_date='" + format.format(date) + "'";
         ResultSet rs = stmt.executeQuery(query);
-        int rCountOnDate = rs.getInt(1);
-        if (rCountOnDate == 5)
-            return false;
+        int rowCount = 0;
+        if (rs.last()) {
+            rowCount = rs.getRow();
+        }
+        if (rowCount != 0) {
+            rs.beforeFirst();
+            int rCountOnDate = rs.getInt(1);
+            if (rCountOnDate == 5)
+                return false;
+        }
         query = "SELECT records_count FROM " + doctorsTableName +
                 "WHERE doctor_id=" + doctor_id;
         int rCount = rs.getInt(1);
         rs = stmt.executeQuery(query);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         //creates record entry
-        String updt = "INSERT INTO " + recordsTableName + " (doctor_id, patient_id, date) " +
-                "VALUES (" + doctor_id + ", " + patient_id + ", " + format.format(date) + ")";
+        String updt = "INSERT INTO " + recordsTableName + " (doctor_id, patient_id, rec_date) " +
+                "VALUES (" + doctor_id + ", " + patient_id + ", '" + format.format(date) + "')";
         //updates recordsCount in doctors entry
         String updateRCount = "UPDATE " + doctorsTableName + " SET records_count=" + ++rCount;
         stmt.executeUpdate(updt);
@@ -287,7 +355,7 @@ public class DBManager {
         return true;
     }
 
-    protected synchronized ArrayList<String> getDoctorsSpecializationList() throws SQLException {
+    public synchronized ArrayList<String> getDoctorsSpecializationList() throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
@@ -313,15 +381,16 @@ public class DBManager {
         Statement stmt = conn.createStatement();
         String patientTable = "CREATE TABLE " + patientsTableName + " (" +
                 "patient_id INT NOT NULL GENERATED ALWAYS AS IDENTITY," +
-                "patient_surname VARCHAR(20) NOT NULL," +
                 "patient_name VARCHAR(20) NOT NULL," +
+                "patient_surname VARCHAR(20) NOT NULL," +
                 "district VARCHAR(50) NOT NULL," +
                 "diagnosis VARCHAR(255) NOT NULL," +
+                "insurance_id INT NOT NULL UNIQUE," +
                 "PRIMARY KEY (patient_id))";
         String doctorTable = "CREATE TABLE " + doctorsTableName + " (" +
                 "doctor_id INT NOT NULL GENERATED ALWAYS AS IDENTITY," +
-                "doctor_surname VARCHAR(20) NOT NULL," +
                 "doctor_name VARCHAR(20) NOT NULL," +
+                "doctor_surname VARCHAR(20) NOT NULL," +
                 "room INT NOT NULL," +
                 "specialization VARCHAR(50) NOT NULL," +
                 "records_count INT NOT NULL," +
@@ -331,7 +400,7 @@ public class DBManager {
                 "record_id INT NOT NULL GENERATED ALWAYS AS IDENTITY," +
                 "doctor_id INT NOT NULL," +
                 "patient_id INT NOT NULL," +
-                "date DATE," +
+                "rec_date DATE," +
                 "PRIMARY KEY (record_id))";
         stmt.executeUpdate(patientTable);
         stmt.executeUpdate(doctorTable);

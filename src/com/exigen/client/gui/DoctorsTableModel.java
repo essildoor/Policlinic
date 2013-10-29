@@ -24,27 +24,29 @@ public class DoctorsTableModel implements TableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "Фамилия";
-            case 1:
                 return "Имя";
+            case 1:
+                return "Фамилия";
             case 2:
                 return "Кабинет";
             case 3:
                 return "Специальность";
+            case 4:
+                return "Всего записей";
         }
         return "";
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if (columnIndex == 2)
+        if (columnIndex == 2 || columnIndex == 4)
             return Integer.class;
         return String.class;
     }
@@ -59,13 +61,15 @@ public class DoctorsTableModel implements TableModel {
         Doctor d = doctorsList.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return d.getSurname();
-            case 1:
                 return d.getName();
+            case 1:
+                return d.getSurname();
             case 2:
                 return d.getRoom();
             case 3:
                 return d.getSpecialization();
+            case 4:
+                return d.getRecordsCount();
         }
         return "";
     }

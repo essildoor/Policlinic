@@ -32,11 +32,11 @@ public class RecordsTableModel implements TableModel {
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "Врач";
+                return "Doctor";
             case 1:
-                return "Пациент";
+                return "Patient";
             case 2:
-                return "Дата";
+                return "Date";
         }
         return "";
     }

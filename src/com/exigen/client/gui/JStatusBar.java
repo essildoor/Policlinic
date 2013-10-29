@@ -5,7 +5,6 @@ public class JStatusBar extends JPanel {
     public JStatusBar() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(10, 23));
-        setBorder(BorderFactory.createLineBorder(Color.black));
         JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanel.setOpaque(false);
         add(rightPanel, BorderLayout.EAST);

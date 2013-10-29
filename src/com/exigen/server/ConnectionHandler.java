@@ -43,10 +43,13 @@ public class ConnectionHandler implements Runnable {
                 sendResponse(request);
             }
         } catch (IOException e) {
+            logger.log(Level.SEVERE, "client handler crashed. " + e.getMessage());
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            logger.log(Level.SEVERE, "client handler crashed. " + e.getMessage());
             e.printStackTrace();
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, "client handler crashed. " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -65,7 +68,7 @@ public class ConnectionHandler implements Runnable {
                 stop();
                 break;
             case REQUEST_ALL_LISTS: {
-                Object dlParam = objInp.readObject();
+                String dlParam = (String) objInp.readObject();
                 ArrayList result = new ArrayList();
                 result.add(dbManager.getPatientsList());
                 result.add(dbManager.getDoctorsList(dlParam));
@@ -80,7 +83,7 @@ public class ConnectionHandler implements Runnable {
                 break;
             }
             case REQUEST_DOCTORS_LIST: {
-                Object dlParam = objInp.readObject();
+                String dlParam = (String) objInp.readObject();
                 objOut.writeObject(dbManager.getDoctorsList(dlParam));
                 objOut.flush();
                 break;
@@ -142,6 +145,12 @@ public class ConnectionHandler implements Runnable {
                 break;
             }
             case REQUEST_DELETE_RECORD: {
+                break;
+            }
+            case REQUEST_SEARCH_PATIENT: {
+                Patient param = (Patient) objInp.readObject();
+                objOut.writeObject(dbManager.search(param));
+                objOut.flush();
                 break;
             }
             case REQUEST_DOCTOR_SPECIALIZATION_LIST: {

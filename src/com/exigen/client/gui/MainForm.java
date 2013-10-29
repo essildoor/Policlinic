@@ -1,5 +1,6 @@
 package com.exigen.client.gui;
 
+import com.alee.laf.WebLookAndFeel;
 import com.exigen.client.Client;
 import com.exigen.client.ClientConfig;
 import com.exigen.client.ClientLogger;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -151,16 +153,40 @@ public class MainForm extends JFrame {
      */
     private void setupRecordsTab(Container parent) {
 
-        JPanel buttonsPanel = new JPanel();
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         JScrollPane recordsScrollPane = new JScrollPane(recordsTable);
-        JButton addRecordButton = new JButton(ADD_BUTTON_LABEL);
-        JButton deleteRecordButton = new JButton(DELETE_BUTTON_LABEL);
-        JButton searchButtonButton = new JButton(SEARCH_BUTTON_LABEL);
+        JButton addRecordButton = new JButton();
+        JButton deleteRecordButton = new JButton();
+        JButton searchRecordButton = new JButton();
+        JButton sortRecordButton = new JButton();
+        JButton settingsButton = new JButton();
+
+
+        ImageIcon addIcon = createIcon("addIcon32.png");
+        ImageIcon deleteIcon = createIcon("deleteIcon32.png");
+        ImageIcon searchIcon = createIcon("searchIcon32.png");
+        ImageIcon sortIcon = createIcon("sortIcon32.png");
+        ImageIcon settingsIcon = createIcon("settingsIcon32.png");
+
+        addRecordButton.setIcon(addIcon);
+        deleteRecordButton.setIcon(deleteIcon);
+        searchRecordButton.setIcon(searchIcon);
+        sortRecordButton.setIcon(sortIcon);
+        settingsButton.setIcon(settingsIcon);
+
+        addRecordButton.setToolTipText("Add new record");
+        deleteRecordButton.setToolTipText("Delete record");
+        searchRecordButton.setToolTipText("Search records");
+        sortRecordButton.setToolTipText("Sort by..");
+        settingsButton.setToolTipText("Settings");
 
         buttonsPanel.add(addRecordButton);
         buttonsPanel.add(deleteRecordButton);
-        buttonsPanel.add(searchButtonButton);
+        buttonsPanel.add(searchRecordButton);
+        buttonsPanel.add(sortRecordButton);
+        buttonsPanel.add(new JSeparator(JSeparator.VERTICAL));
+        buttonsPanel.add(settingsButton);
 
         parent.setLayout(new BorderLayout());
         parent.add(buttonsPanel, BorderLayout.NORTH);
@@ -169,15 +195,26 @@ public class MainForm extends JFrame {
         addRecordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*SwingUtilities.invokeLater(new AddRecordDialog(MainForm.this, statusLabel));*/
+                SwingUtilities.invokeLater(new AddRecordDialog(MainForm.this, statusLabel));
             }
         });
         deleteRecordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //todo
             }
         });
+
+    }
+
+    protected static ImageIcon createIcon(String path) {
+        URL imgURL = MainForm.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("File not found " + path);
+            return null;
+        }
     }
 
     /**
@@ -186,15 +223,43 @@ public class MainForm extends JFrame {
      * @param parent parent container
      */
     private void setupDoctorsTab(Container parent) {
-        JPanel buttonsPanel = new JPanel();
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JScrollPane doctorsScrollPane = new JScrollPane(doctorsTable);
-        JButton addDoctorButton = new JButton(ADD_BUTTON_LABEL);
-        JButton deleteDoctorButton = new JButton(DELETE_BUTTON_LABEL);
-        JButton searchButtonButton = new JButton(SEARCH_BUTTON_LABEL);
+        JButton addDoctorButton = new JButton();
+        JButton editDoctorButton = new JButton();
+        JButton deleteDoctorButton = new JButton();
+        JButton searchDoctorButton = new JButton();
+        JButton sortDoctorButton = new JButton();
+        JButton settingsButton = new JButton();
+
+        ImageIcon addIcon = createIcon("addIcon32.png");
+        ImageIcon editIcon = createIcon("editIcon32.png");
+        ImageIcon deleteIcon = createIcon("deleteIcon32.png");
+        ImageIcon searchIcon = createIcon("searchIcon32.png");
+        ImageIcon sortIcon = createIcon("sortIcon32.png");
+        ImageIcon settingsIcon = createIcon("settingsIcon32.png");
+
+        addDoctorButton.setIcon(addIcon);
+        editDoctorButton.setIcon(editIcon);
+        deleteDoctorButton.setIcon(deleteIcon);
+        searchDoctorButton.setIcon(searchIcon);
+        sortDoctorButton.setIcon(sortIcon);
+        settingsButton.setIcon(settingsIcon);
+
+        addDoctorButton.setToolTipText("Add doctor");
+        editDoctorButton.setToolTipText("Edit doctor");
+        deleteDoctorButton.setToolTipText("Delete doctor");
+        searchDoctorButton.setToolTipText("Search doctors");
+        sortDoctorButton.setToolTipText("Sort by..");
+        settingsButton.setToolTipText("Settings");
 
         buttonsPanel.add(addDoctorButton);
+        buttonsPanel.add(editDoctorButton);
         buttonsPanel.add(deleteDoctorButton);
-        buttonsPanel.add(searchButtonButton);
+        buttonsPanel.add(searchDoctorButton);
+        buttonsPanel.add(sortDoctorButton);
+        buttonsPanel.add(new JSeparator(JSeparator.VERTICAL));
+        buttonsPanel.add(settingsButton);
 
         parent.setLayout(new BorderLayout());
         parent.add(buttonsPanel, BorderLayout.NORTH);
@@ -228,15 +293,45 @@ public class MainForm extends JFrame {
      * @param parent parent container
      */
     private void setupPatientsTab(final Container parent) {
-        JPanel buttonsPanel = new JPanel();
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JScrollPane patientsScrollPane = new JScrollPane(patientsTable);
-        JButton addPatientButton = new JButton(ADD_BUTTON_LABEL);
-        JButton deletePatientButton = new JButton(DELETE_BUTTON_LABEL);
-        JButton searchPatientButton = new JButton(SEARCH_BUTTON_LABEL);
+        JButton addPatientButton = new JButton();
+        JButton editPatientButton = new JButton();
+        JButton deletePatientButton = new JButton();
+        JButton searchPatientButton = new JButton();
+        JButton sortPatientButton = new JButton();
+        JButton settingsButton = new JButton();
+
+        ImageIcon addIcon = createIcon("addIcon32.png");
+        ImageIcon editIcon = createIcon("editIcon32.png");
+        ImageIcon deleteIcon = createIcon("deleteIcon32.png");
+        ImageIcon searchIcon = createIcon("searchIcon32.png");
+        ImageIcon sortIcon = createIcon("sortIcon32.png");
+        ImageIcon settingsIcon = createIcon("settingsIcon32.png");
+
+        addPatientButton.setIcon(addIcon);
+        editPatientButton.setIcon(editIcon);
+        deletePatientButton.setIcon(deleteIcon);
+        searchPatientButton.setIcon(searchIcon);
+        sortPatientButton.setIcon(sortIcon);
+        settingsButton.setIcon(settingsIcon);
+
+        addPatientButton.setToolTipText("Add patient");
+        editPatientButton.setToolTipText("Edit patient");
+        deletePatientButton.setToolTipText("Delete patient");
+        searchPatientButton.setToolTipText("Search patient");
+        sortPatientButton.setToolTipText("Sort by..");
+        settingsButton.setToolTipText("Settings");
 
         buttonsPanel.add(addPatientButton);
+        buttonsPanel.add(editPatientButton);
         buttonsPanel.add(deletePatientButton);
         buttonsPanel.add(searchPatientButton);
+        buttonsPanel.add(sortPatientButton);
+        JPanel sep = new JPanel();
+        sep.add(new JSeparator(SwingConstants.VERTICAL));
+        buttonsPanel.add(sep);
+        buttonsPanel.add(settingsButton);
 
         parent.setLayout(new BorderLayout());
         parent.add(buttonsPanel, BorderLayout.NORTH);
@@ -273,6 +368,7 @@ public class MainForm extends JFrame {
      * setting up all components to main frame
      */
     public static void setupAndShowGUI(Client client) {
+        WebLookAndFeel.install();
         final MainForm frame = new MainForm(client);
         ClientConfig cfg = ClientConfig.getInstance();
         int frameWidth = cfg.getMainFrameDefaultWidth();
