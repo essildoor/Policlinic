@@ -119,6 +119,7 @@ public class AddDoctorDialog extends JDialog implements Runnable{
                 dispose();
             }
         });
+        setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);

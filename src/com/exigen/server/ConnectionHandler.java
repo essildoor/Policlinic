@@ -68,10 +68,9 @@ public class ConnectionHandler implements Runnable {
                 stop();
                 break;
             case REQUEST_ALL_LISTS: {
-                String dlParam = (String) objInp.readObject();
                 ArrayList result = new ArrayList();
                 result.add(dbManager.getPatientsList());
-                result.add(dbManager.getDoctorsList(dlParam));
+                result.add(dbManager.getDoctorsList());
                 result.add(dbManager.getRecordsList());
                 objOut.writeObject(result);
                 objOut.flush();
@@ -83,8 +82,7 @@ public class ConnectionHandler implements Runnable {
                 break;
             }
             case REQUEST_DOCTORS_LIST: {
-                String dlParam = (String) objInp.readObject();
-                objOut.writeObject(dbManager.getDoctorsList(dlParam));
+                objOut.writeObject(dbManager.getDoctorsList());
                 objOut.flush();
                 break;
             }
@@ -145,6 +143,12 @@ public class ConnectionHandler implements Runnable {
                 break;
             }
             case REQUEST_DELETE_RECORD: {
+                if (dbManager.delete((Record) objInp.readObject())) {
+                    objOut.writeInt(OK);
+                } else {
+                    objOut.writeInt(ERROR);
+                }
+                objOut.flush();
                 break;
             }
             case REQUEST_SEARCH_PATIENT: {

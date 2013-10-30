@@ -47,7 +47,7 @@ public class AddPatientDialog extends JDialog implements Runnable {
         setPreferredSize(new Dimension(width, height));
         MaskFormatter f = null;
         try {
-            f = new MaskFormatter("##########");
+            f = new MaskFormatter("#####");
             f.setValidCharacters("0123456789");
         } catch (ParseException e) {
             e.printStackTrace();
@@ -111,7 +111,7 @@ public class AddPatientDialog extends JDialog implements Runnable {
                         statusLabel.setText("Пациент не был добавлен");
                         statusLabel.repaint();
                     }
-                    form.tablesUpdate();
+                    form.updatePatientsTable();
                     setVisible(false);
                     dispose();
                 }
@@ -124,6 +124,7 @@ public class AddPatientDialog extends JDialog implements Runnable {
                 dispose();
             }
         });
+        setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);

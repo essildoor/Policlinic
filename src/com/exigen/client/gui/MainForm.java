@@ -12,7 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -33,6 +32,17 @@ public class MainForm extends JFrame {
     private JTable patientsTable;
     private ClientConfig cfg;
     private Logger logger;
+
+    private Patient currentPatientSearchMask; //needs to store current table view
+    private Doctor currentDoctorSearchMask;   // ^~
+
+    protected void setCurrentPatientSearchMask(Patient currentPatientSearchMask) {
+        this.currentPatientSearchMask = currentPatientSearchMask;
+    }
+
+    protected void setCurrentDoctorSearchMask(Doctor currentDoctorSearchMask) {
+        this.currentDoctorSearchMask = currentDoctorSearchMask;
+    }
 
     protected Client getClient() {
         return this.client;
@@ -63,6 +73,9 @@ public class MainForm extends JFrame {
         }
     }
 
+    /**
+     * updates all tables from server
+     */
     protected void tablesUpdate() {
         ArrayList tables = (ArrayList) client.sendRequest(REQUEST_ALL_LISTS, null);
         patientsList = (ArrayList<Patient>) tables.get(0);
@@ -71,6 +84,45 @@ public class MainForm extends JFrame {
         patientsTable.setModel(new PatientsTableModel(patientsList));
         doctorsTable.setModel(new DoctorsTableModel(doctorsList));
         recordsTable.setModel(new RecordsTableModel(recordsList));
+    }
+
+    /**
+     * Updates patients list from server regarding search param
+     * selects all list if param is null
+     *
+     */
+    protected void updatePatientsTable() {
+        patientsTable.setModel(
+                new PatientsTableModel(
+                        (ArrayList<Patient>) client.sendRequest(REQUEST_PATIENTS_LIST,
+                                currentPatientSearchMask)
+                )
+        );
+    }
+
+    /**
+     * Updates doctors list from server regarding search param
+     * selects all list if param is null
+     *
+     */
+    protected void updateDoctorsTable() {
+        doctorsTable.setModel(
+                new DoctorsTableModel(
+                        (ArrayList<Doctor>) client.sendRequest(REQUEST_DOCTORS_LIST,
+                                currentDoctorSearchMask)
+                )
+        );
+    }
+
+    /**
+     * Updates records list from server
+     */
+    protected void recordsTableUpdate() {
+        recordsTable.setModel(
+                new RecordsTableModel(
+                        (ArrayList<Record>) client.sendRequest(REQUEST_RECORDS_LIST, null)
+                )
+        );
     }
 
     public MainForm(Client client) {
@@ -84,7 +136,9 @@ public class MainForm extends JFrame {
         patientsTable = new JTable(new PatientsTableModel(patientsList));
         doctorsTable = new JTable(new DoctorsTableModel(doctorsList));
         recordsTable = new JTable(new RecordsTableModel(recordsList));
-        logger = ClientLogger.getInstance().getLogger();
+        //shows all table elements element by default
+        currentPatientSearchMask = null;
+        currentDoctorSearchMask = null;
     }
 
     /**
@@ -129,13 +183,9 @@ public class MainForm extends JFrame {
         menuBar.add(fileMenu);
 
         JMenuItem connectItem = new JMenuItem("Подключиться");
+        JMenuItem exitItem = new JMenuItem("Выход");
         fileMenu.add(connectItem);
-        //Help menu and its items
-        JMenu helpMenu = new JMenu("Справка");
-        menuBar.add(helpMenu);
-
-        JMenuItem helpItem = new JMenuItem("Справка");
-        helpMenu.add(helpItem);
+        fileMenu.add(exitItem);
 
         frame.setJMenuBar(menuBar);
     }
@@ -192,7 +242,16 @@ public class MainForm extends JFrame {
         deleteRecordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo
+                if ((Integer) client.sendRequest(REQUEST_DELETE_RECORD,
+                        recordsList.get(recordsTable.getSelectedRow())) == OK) {
+                    recordsTableUpdate();
+                    statusLabelMessage("Запись удалена");
+                    logger.log(Level.FINEST, "Record successfully deleted");
+                } else {
+                    recordsTableUpdate();
+                    logger.log(Level.WARNING, "Couldn't delete record");
+                    statusLabelMessage("Запись не удалена!");
+                }
             }
         });
 
@@ -222,6 +281,7 @@ public class MainForm extends JFrame {
         JButton editDoctorButton = new JButton();
         JButton deleteDoctorButton = new JButton();
         JButton searchDoctorButton = new JButton();
+        JButton viewAllButton = new JButton("View all");
         JButton settingsButton = new JButton();
 
         ImageIcon addIcon = createIcon("addIcon32.png");
@@ -246,6 +306,7 @@ public class MainForm extends JFrame {
         buttonsPanel.add(editDoctorButton);
         buttonsPanel.add(deleteDoctorButton);
         buttonsPanel.add(searchDoctorButton);
+        buttonsPanel.add(viewAllButton);
         buttonsPanel.add(new JSeparator(JSeparator.VERTICAL));
         buttonsPanel.add(settingsButton);
 
@@ -265,14 +326,25 @@ public class MainForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if ((Integer) client.sendRequest(REQUEST_DELETE_DOCTOR,
                         doctorsList.get(doctorsTable.getSelectedRow())) == OK) {
-                    tablesUpdate();
+                    //updates table according current search mask
+                    updateDoctorsTable();
                     statusLabelMessage("Доктор удален");
                     logger.log(Level.FINEST, "Doctor successfully deleted");
                 } else {
-                    tablesUpdate();
+                    updateDoctorsTable();
                     logger.log(Level.WARNING, "Couldn't delete doctor");
-                    statusLabelMessage("Ошибка при попытке удаления доктора");
+                    statusLabelMessage("Доктор не удален!");
                 }
+            }
+        });
+
+        viewAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentPatientSearchMask = null;
+                updateDoctorsTable();
+                statusLabel.setText("Настройки поиска сброшены");
+                statusLabel.repaint();
             }
         });
     }
@@ -291,6 +363,7 @@ public class MainForm extends JFrame {
         JButton editPatientButton = new JButton();
         JButton deletePatientButton = new JButton();
         JButton searchPatientButton = new JButton();
+        JButton viewAllButton = new JButton("View all");
         JButton settingsButton = new JButton();
 
         ImageIcon addIcon = createIcon("addIcon32.png");
@@ -315,9 +388,8 @@ public class MainForm extends JFrame {
         buttonsPanel.add(editPatientButton);
         buttonsPanel.add(deletePatientButton);
         buttonsPanel.add(searchPatientButton);
-        JPanel sep = new JPanel();
-        sep.add(new JSeparator(SwingConstants.VERTICAL));
-        buttonsPanel.add(sep);
+        buttonsPanel.add(viewAllButton);
+        buttonsPanel.add(new JSeparator(SwingConstants.VERTICAL));
         buttonsPanel.add(settingsButton);
 
         parent.setLayout(new BorderLayout());
@@ -336,21 +408,32 @@ public class MainForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if ((Integer) client.sendRequest(REQUEST_DELETE_PATIENT,
                         patientsList.get(patientsTable.getSelectedRow())) == OK) {
-                    tablesUpdate();
+                    //updates table according current search mask
+                    updatePatientsTable();
                     logger.log(Level.FINEST, "Patient deleted");
                     statusLabelMessage("Пациент удален");
                 } else {
-                    tablesUpdate();
+                    updatePatientsTable();
                     logger.log(Level.WARNING, "Couldn't delete patient");
                     statusLabelMessage("Ошибка при попытке удаления пациента");
                 }
             }
         });
 
+        viewAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentPatientSearchMask = null;
+                updatePatientsTable();
+                statusLabel.setText("Настройки поиска сброшены");
+                statusLabel.repaint();
+            }
+        });
+
         searchPatientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                SwingUtilities.invokeLater(new PatientSearchDialog(MainForm.this, statusLabel));
             }
         });
     }

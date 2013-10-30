@@ -71,14 +71,10 @@ public class Client {
             if (response == OK)
                 switch (request) {
                     case REQUEST_ALL_LISTS:
-                        objOut.writeObject(param);
-                        objOut.flush();
                         return objInp.readObject();
                     case REQUEST_PATIENTS_LIST:
                         return objInp.readObject();
                     case REQUEST_DOCTORS_LIST:
-                        objOut.writeObject(param);
-                        objOut.flush();
                         return objInp.readObject();
                     case REQUEST_RECORDS_LIST:
                         return objInp.readObject();
@@ -108,7 +104,9 @@ public class Client {
                         return objInp.readInt();
                     }
                     case REQUEST_DELETE_RECORD: {
-
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readInt();
                     }
                     case REQUEST_EDIT_PATIENT: {
 

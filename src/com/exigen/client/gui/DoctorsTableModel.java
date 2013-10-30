@@ -24,7 +24,7 @@ public class DoctorsTableModel implements TableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 4;
     }
 
     @Override
@@ -38,15 +38,13 @@ public class DoctorsTableModel implements TableModel {
                 return "Кабинет";
             case 3:
                 return "Специальность";
-            case 4:
-                return "Всего записей";
         }
         return "";
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if (columnIndex == 2 || columnIndex == 4)
+        if (columnIndex == 2)
             return Integer.class;
         return String.class;
     }
@@ -68,8 +66,6 @@ public class DoctorsTableModel implements TableModel {
                 return d.getRoom();
             case 3:
                 return d.getSpecialization();
-            case 4:
-                return d.getRecordsCount();
         }
         return "";
     }

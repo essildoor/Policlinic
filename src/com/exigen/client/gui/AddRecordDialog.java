@@ -273,7 +273,6 @@ public class AddRecordDialog extends JDialog implements Runnable {
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-
         pack();
         setVisible(true);
     }
