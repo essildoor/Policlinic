@@ -82,8 +82,14 @@ public class AddRecordDialog extends JDialog implements Runnable {
         datePanel.setLayout(new BoxLayout(datePanel, BoxLayout.Y_AXIS));
         doctorPanel.setLayout(new BoxLayout(doctorPanel, BoxLayout.Y_AXIS));
 
-        MaskFormatter f = new MaskFormatter();
-        f.setValidCharacters("0123456789");
+        MaskFormatter f = null;
+        try {
+            f = new MaskFormatter("#####");
+            f.setValidCharacters("0123456789");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
         //patient section setup
         JPanel dataPanel1 = new JPanel(new GridLayout(5, 2, 10, 10));

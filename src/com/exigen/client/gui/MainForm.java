@@ -200,7 +200,6 @@ public class MainForm extends JFrame {
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         //sets header click sorting
         patientsTable.setAutoCreateRowSorter(true);
-
         JScrollPane recordsScrollPane = new JScrollPane(recordsTable);
         JButton addRecordButton = new JButton();
         JButton deleteRecordButton = new JButton();

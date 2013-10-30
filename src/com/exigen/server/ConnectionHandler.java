@@ -27,7 +27,7 @@ public class ConnectionHandler implements Runnable {
 
     public ConnectionHandler(Socket client) throws IOException {
         this.client = client;
-        dbManager = DBManager.getInstance();
+        dbManager = new DBManager();
         logger = ServerLogger.getInstance().getLogger();
         objOut = new ObjectOutputStream(client.getOutputStream());
         objInp = new ObjectInputStream(client.getInputStream());
@@ -70,8 +70,11 @@ public class ConnectionHandler implements Runnable {
             case REQUEST_ALL_LISTS: {
                 ArrayList result = new ArrayList();
                 result.add(dbManager.getPatientsList());
+                System.out.println("patient list done");
                 result.add(dbManager.getDoctorsList());
+                System.out.println("doctor list done");
                 result.add(dbManager.getRecordsList());
+                System.out.println("record list done");
                 objOut.writeObject(result);
                 objOut.flush();
                 break;
