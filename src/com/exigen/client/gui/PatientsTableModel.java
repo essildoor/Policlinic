@@ -6,7 +6,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.*;
 
-public class PatientsTableModel implements TableModel{
+public class PatientsTableModel implements TableModel {
 
     private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
     private List<Patient> patientList;

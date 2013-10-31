@@ -4,6 +4,8 @@ public class ProtocolCodes {
     public static final int OK = 0;
     public static final int ERROR = -1;
     public static final int STOP = 100;
+    public static final int SERVER_IS_NOT_RESPONDING = -2;
+    public static final int CLIENT_IS_NOT_RESPONDING = -3;
 
     public static final int REQUEST_ALL_LISTS = 10;
     public static final int REQUEST_PATIENTS_LIST = 1;

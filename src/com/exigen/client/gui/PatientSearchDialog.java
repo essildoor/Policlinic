@@ -17,7 +17,6 @@ public class PatientSearchDialog extends JDialog implements Runnable {
     private Client client;
     private JLabel statusLabel;
     private MainForm form;
-    private ArrayList<Patient> patientsList;
     private JTextField name;
     private JTextField surname;
     private JTextField district;

@@ -17,7 +17,7 @@ public class ServerLogger {
             fileHandler.setFormatter(new SimpleFormatter());
             logger.addHandler(fileHandler);
             //LEVEL - WARNING
-            logger.setLevel(Level.WARNING);
+            logger.setLevel(Level.FINEST);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "IO error due server.log file creation");
         }

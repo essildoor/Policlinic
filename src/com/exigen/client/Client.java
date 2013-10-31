@@ -2,9 +2,7 @@ package com.exigen.client;
 
 import com.exigen.client.gui.MainForm;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,41 +14,31 @@ public class Client {
 
     private ObjectInputStream objInp;
     private ObjectOutputStream objOut;
-    private Socket s;
-    private ClientConfig cfg;
+    private Socket clientSocket;
     private Logger logger;
 
-    public Client() {
-        String host = "";
-        int port = 0;
-        try {
-            //establishes connection to server with a specified params
-            logger = ClientLogger.getInstance().getLogger();
-            cfg = ClientConfig.getInstance();
-            port = cfg.getPort();
-            host = cfg.getHost();
-            s = new Socket(host, port);
-            objInp = new ObjectInputStream(s.getInputStream());
-            objOut = new ObjectOutputStream(s.getOutputStream());
-            //launches main form instance related to current client instance
-            MainForm.setupAndShowGUI(this);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Couldn't connect to socket " + host + ":" + port);
-            //e.printStackTrace();
-        }
+    public Client(String host, int port) throws IOException {
+        //establishes connection to server with a specified params
+        logger = ClientLogger.getInstance().getLogger();
+        clientSocket = new Socket(host, port);
+        objInp = new ObjectInputStream(clientSocket.getInputStream());
+        objOut = new ObjectOutputStream(clientSocket.getOutputStream());
+
     }
 
-
+    //client console mode
     public static void main(String[] args) throws IOException {
-        Client client = new Client();
-        /*BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int request;
-        while (true) {
-            System.out.print(">");
+        ClientConfig cfg = ClientConfig.getInstance();
+        Client client = new Client(cfg.getHost(), cfg.getPort());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int request = 0;
+        //type 100 for exit
+        while (request != STOP) {
+            System.out.print("type request code>");
             request = Integer.parseInt(br.readLine());
             Object o = client.sendRequest(request, null);
             System.out.println("object = " + o);
-        }*/
+        }
     }
 
     /**
@@ -62,12 +50,12 @@ public class Client {
      */
     public synchronized Object sendRequest(int request, Object param) {
         try {
-            System.out.println("sendRequest: request=" + request + ", param=" + param);
+            logger.log(Level.FINEST, "sendRequest: request=" + request + ", param=" + param);
             objOut.writeInt(request);
             objOut.flush();
-            System.out.println("sendRequest: request dispatched");
+            logger.log(Level.FINEST, "sendRequest: request dispatched");
             int response = objInp.readInt();
-            System.out.println("sendRequest: response=" + response);
+            logger.log(Level.FINEST, "sendRequest: response=" + response);
             if (response == OK)
                 switch (request) {
                     case REQUEST_ALL_LISTS:
@@ -112,10 +100,14 @@ public class Client {
                         return objInp.readInt();
                     }
                     case REQUEST_EDIT_PATIENT: {
-
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readInt();
                     }
                     case REQUEST_EDIT_DOCTOR: {
-
+                        objOut.writeObject(param);
+                        objOut.flush();
+                        return objInp.readInt();
                     }
                     case REQUEST_SEARCH_PATIENT: {
                         objOut.writeObject(param);
@@ -136,12 +128,12 @@ public class Client {
                         return objInp.readObject();
                     }
                 }
-            System.out.println("server response is not OK");
+            logger.log(Level.WARNING, "server response is not OK");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return SERVER_IS_NOT_RESPONDING;
     }
 }

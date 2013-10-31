@@ -96,8 +96,6 @@ public class DBManager {
      * @return Record list
      */
     protected ArrayList<Record> getRecordsList() throws SQLException {
-        //todo
-        //fix query
         ArrayList<Record> result = new ArrayList<Record>();
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
@@ -106,24 +104,22 @@ public class DBManager {
             Patient patient;
             Doctor doctor;
             java.util.Date date;
-            /*String query = "SELECT doctor_name, doctor_surname, room, specialization, " +
-                    "patient_name, patient_surname, district, diagnosis, insurance_id , rec_date " +
+            String query = "SELECT doctor_name, doctor_surname, room, specialization, " +
+                    "patient_name, patient_surname, district, diagnosis, insurance_id , rec_date, " +
+                    "record_id " +
                     "FROM records, doctors, patients " +
                     "WHERE records.doctor_id=doctors.doctor_id " +
-                    "AND records.patient_id=patients.patient_id";*/
-            String query = "select * from records";
+                    "AND records.patient_id=patients.patient_id";
             rs = stmt.executeQuery(query);
-            int i=0;
             while (rs.next()) {
-                /*doctor = new Doctor(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
+                doctor = new Doctor(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
                 patient = new Patient(rs.getString(5), rs.getString(6), rs.getString(7),
                         rs.getString(8), rs.getInt(9));
                 date = rs.getDate(10);
                 record = new Record(doctor, patient, date);
-                result.add(record);*/
-                i++;
+                record.setId(rs.getInt(11));
+                result.add(record);
             }
-            System.out.println("" + i + " record(s) found!");
         } finally {
             if (rs != null) {
                 rs.close();
@@ -142,8 +138,6 @@ public class DBManager {
      * @throws SQLException
      */
     protected boolean delete(Patient patient) throws SQLException {
-        //todo
-        //fix: deletes even if related records exist
         Statement stmt = conn.createStatement();
         //gets current date in sql format for comparing purposes
         java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -175,8 +169,6 @@ public class DBManager {
      * @throws SQLException
      */
     protected boolean delete(Doctor doctor) throws SQLException {
-        //todo
-        //fix: deletes even if related records exist
         Statement stmt = conn.createStatement();
         //gets current date in sql format for comparing purposes
         java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -207,6 +199,7 @@ public class DBManager {
      */
     protected boolean delete(Record record) throws SQLException {
         Statement stmt = conn.createStatement();
+        System.out.println("trying to delete record with id=" + record.getId());
         String update = "DELETE FROM records WHERE record_id=" + record.getId();
         try {
             stmt.executeUpdate(update);
@@ -279,7 +272,8 @@ public class DBManager {
                             rs.getString(5), rs.getInt(6));
                     p.setId(rs.getInt(1));
                     result.add(p);
-                    System.out.println("" + result.size() + " patient(s) found!");
+                    System.out.println("" + result.size() + " patient(s) found!\n" +
+                            "patient_id=" + p.getId());
                 }
             }
         } finally {
@@ -339,8 +333,10 @@ public class DBManager {
                 rs = stmt.executeQuery(query);
                 while (rs.next()) {
                     d = new Doctor(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+                    d.setId(rs.getInt(1));
                     result.add(d);
-                    System.out.println("" + result.size() + " doctor(s) found!");
+                    System.out.println("" + result.size() + " doctor(s) found!\n" +
+                            "doctor_id=" + d.getId());
                 }
             }
         } finally {
@@ -478,30 +474,25 @@ public class DBManager {
      */
     private void createTables() throws SQLException {
         Statement stmt = conn.createStatement();
-        String database = "CREATE SCHEMA polyclinic";
         String patientTable = "CREATE TABLE patients (" +
                 "patient_id INT NOT NULL GENERATED ALWAYS AS IDENTITY," +
                 "patient_name VARCHAR(20) NOT NULL," +
                 "patient_surname VARCHAR(20) NOT NULL," +
                 "district VARCHAR(50) NOT NULL," +
                 "diagnosis VARCHAR(255) NOT NULL," +
-                "insurance_id INT NOT NULL UNIQUE," +
-                "PRIMARY KEY (patient_id))";
+                "insurance_id INT NOT NULL UNIQUE)";
         String doctorTable = "CREATE TABLE doctors (" +
                 "doctor_id INT NOT NULL GENERATED ALWAYS AS IDENTITY," +
                 "doctor_name VARCHAR(20) NOT NULL," +
                 "doctor_surname VARCHAR(20) NOT NULL," +
                 "room INT NOT NULL," +
-                "specialization VARCHAR(50) NOT NULL," +
-                "PRIMARY KEY (doctor_id))";
+                "specialization VARCHAR(50) NOT NULL)";
 
         String recordTable = "CREATE TABLE records (" +
                 "record_id INT NOT NULL GENERATED ALWAYS AS IDENTITY," +
                 "doctor_id INT NOT NULL," +
                 "patient_id INT NOT NULL," +
-                "rec_date DATE," +
-                "PRIMARY KEY (record_id))";
-        stmt.executeUpdate(database);
+                "rec_date DATE NOT NULL)";
         stmt.executeUpdate(patientTable);
         stmt.executeUpdate(doctorTable);
         stmt.executeUpdate(recordTable);
@@ -518,10 +509,12 @@ public class DBManager {
         System.out.println("tables dropped");
     }
 
-    public static void main(String[] args) throws SQLException {
+    /*public static void main(String[] args) throws SQLException {
         DBManager d = new DBManager();
+
+
         System.out.println(d.getPatientsList().size());
         System.out.println(d.getDoctorsList().size());
         System.out.println(d.getRecordsList().size());
-    }
+    }*/
 }

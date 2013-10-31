@@ -170,7 +170,9 @@ public class AddRecordDialog extends JDialog implements Runnable {
         doctorPanel.add(viewPanel3);
 
         JButton okButton = new JButton("Принять");
+        okButton.setPreferredSize(new Dimension(130, 40));
         JButton cancelButton = new JButton("Отмена");
+        cancelButton.setPreferredSize(new Dimension(130, 40));
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonsPanel.add(okButton);
         buttonsPanel.add(cancelButton);
@@ -229,7 +231,7 @@ public class AddRecordDialog extends JDialog implements Runnable {
                             if ((Integer) client.sendRequest(REQUEST_ADD_RECORD, record) == OK) {
                                 statusLabel.setText("Регистрационная запись успешно добавлена");
                                 statusLabel.repaint();
-                                form.recordsTableUpdate();
+                                form.updateRecordsTable();
                                 setVisible(false);
                                 dispose();
                             } else {
@@ -241,7 +243,6 @@ public class AddRecordDialog extends JDialog implements Runnable {
                         JOptionPane.showMessageDialog(AddRecordDialog.this,
                                 "Неверный ввод даты");
                         //e1.printStackTrace();
-
                     }
                 }
             }
@@ -254,6 +255,7 @@ public class AddRecordDialog extends JDialog implements Runnable {
                 dispose();
             }
         });
+
 
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(patientPanel);
