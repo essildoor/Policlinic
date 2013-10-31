@@ -25,7 +25,6 @@ public class PatientSearchDialog extends JDialog implements Runnable {
     private JFormattedTextField insuranceId;
 
 
-
     public PatientSearchDialog(MainForm form, JLabel statusLabel) {
         this.statusLabel = statusLabel;
         this.form = form;
@@ -43,6 +42,7 @@ public class PatientSearchDialog extends JDialog implements Runnable {
                 (int) ((screenSize.getHeight() - height) / 2));
         setPreferredSize(new Dimension(width, height));
         JLabel title = new JLabel("Поиск пациентов");
+        title.setHorizontalAlignment(JLabel.CENTER);
         JLabel nameLabel = new JLabel("Имя");
         JLabel surnameLabel = new JLabel("Фамилия");
         JLabel districtLabel = new JLabel("Участок");
@@ -64,7 +64,7 @@ public class PatientSearchDialog extends JDialog implements Runnable {
         JButton searchButton = new JButton("Поиск");
         JButton cancelButton = new JButton("Отмена");
 
-        JPanel panel = new JPanel(new GridLayout(7, 2, 10 ,10));
+        JPanel panel = new JPanel(new GridLayout(7, 2, 10, 10));
 
         panel.add(name);
         panel.add(nameLabel);
@@ -97,7 +97,10 @@ public class PatientSearchDialog extends JDialog implements Runnable {
                 String surname = PatientSearchDialog.this.surname.getText();
                 String district = PatientSearchDialog.this.district.getText();
                 String diagnosis = PatientSearchDialog.this.diagnosis.getText();
-                int insuranceId = Integer.parseInt(PatientSearchDialog.this.insuranceId.getText());
+                String tmp = PatientSearchDialog.this.insuranceId.getText();
+                int insuranceId = 0;
+                if (!tmp.equals("") && !tmp.equals("     "))
+                    insuranceId = Integer.parseInt(tmp);
                 Patient searchMask = new Patient(name, surname, district, diagnosis, insuranceId);
                 form.setCurrentPatientSearchMask(searchMask);
                 form.updatePatientsTable();

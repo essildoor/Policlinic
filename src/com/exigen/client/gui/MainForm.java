@@ -92,12 +92,10 @@ public class MainForm extends JFrame {
      *
      */
     protected void updatePatientsTable() {
-        patientsTable.setModel(
-                new PatientsTableModel(
-                        (ArrayList<Patient>) client.sendRequest(REQUEST_PATIENTS_LIST,
-                                currentPatientSearchMask)
-                )
-        );
+        System.out.println(currentPatientSearchMask);
+        patientsList = (ArrayList<Patient>) client.sendRequest(REQUEST_PATIENTS_LIST,
+                currentPatientSearchMask);
+        patientsTable.setModel(new PatientsTableModel(patientsList));
     }
 
     /**
@@ -106,12 +104,9 @@ public class MainForm extends JFrame {
      *
      */
     protected void updateDoctorsTable() {
-        doctorsTable.setModel(
-                new DoctorsTableModel(
-                        (ArrayList<Doctor>) client.sendRequest(REQUEST_DOCTORS_LIST,
-                                currentDoctorSearchMask)
-                )
-        );
+        doctorsList = (ArrayList<Doctor>) client.sendRequest(REQUEST_DOCTORS_LIST,
+                currentDoctorSearchMask);
+        doctorsTable.setModel(new DoctorsTableModel(doctorsList));
     }
 
     /**
@@ -203,30 +198,18 @@ public class MainForm extends JFrame {
         JScrollPane recordsScrollPane = new JScrollPane(recordsTable);
         JButton addRecordButton = new JButton();
         JButton deleteRecordButton = new JButton();
-        JButton searchRecordButton = new JButton();
-        JButton settingsButton = new JButton();
-
 
         ImageIcon addIcon = createIcon("addIcon32.png");
         ImageIcon deleteIcon = createIcon("deleteIcon32.png");
-        ImageIcon searchIcon = createIcon("searchIcon32.png");
-        ImageIcon settingsIcon = createIcon("settingsIcon32.png");
 
         addRecordButton.setIcon(addIcon);
         deleteRecordButton.setIcon(deleteIcon);
-        searchRecordButton.setIcon(searchIcon);
-        settingsButton.setIcon(settingsIcon);
 
         addRecordButton.setToolTipText("Add new record");
         deleteRecordButton.setToolTipText("Delete record");
-        searchRecordButton.setToolTipText("Search records");
-        settingsButton.setToolTipText("Settings");
 
         buttonsPanel.add(addRecordButton);
         buttonsPanel.add(deleteRecordButton);
-        buttonsPanel.add(searchRecordButton);
-        buttonsPanel.add(new JSeparator(JSeparator.VERTICAL));
-        buttonsPanel.add(settingsButton);
 
         parent.setLayout(new BorderLayout());
         parent.add(buttonsPanel, BorderLayout.NORTH);
@@ -281,33 +264,27 @@ public class MainForm extends JFrame {
         JButton deleteDoctorButton = new JButton();
         JButton searchDoctorButton = new JButton();
         JButton viewAllButton = new JButton("View all");
-        JButton settingsButton = new JButton();
 
         ImageIcon addIcon = createIcon("addIcon32.png");
         ImageIcon editIcon = createIcon("editIcon32.png");
         ImageIcon deleteIcon = createIcon("deleteIcon32.png");
         ImageIcon searchIcon = createIcon("searchIcon32.png");
-        ImageIcon settingsIcon = createIcon("settingsIcon32.png");
 
         addDoctorButton.setIcon(addIcon);
         editDoctorButton.setIcon(editIcon);
         deleteDoctorButton.setIcon(deleteIcon);
         searchDoctorButton.setIcon(searchIcon);
-        settingsButton.setIcon(settingsIcon);
 
         addDoctorButton.setToolTipText("Add doctor");
         editDoctorButton.setToolTipText("Edit doctor");
         deleteDoctorButton.setToolTipText("Delete doctor");
         searchDoctorButton.setToolTipText("Search doctors");
-        settingsButton.setToolTipText("Settings");
 
         buttonsPanel.add(addDoctorButton);
         buttonsPanel.add(editDoctorButton);
         buttonsPanel.add(deleteDoctorButton);
         buttonsPanel.add(searchDoctorButton);
         buttonsPanel.add(viewAllButton);
-        buttonsPanel.add(new JSeparator(JSeparator.VERTICAL));
-        buttonsPanel.add(settingsButton);
 
         parent.setLayout(new BorderLayout());
         parent.add(buttonsPanel, BorderLayout.NORTH);
@@ -363,33 +340,27 @@ public class MainForm extends JFrame {
         JButton deletePatientButton = new JButton();
         JButton searchPatientButton = new JButton();
         JButton viewAllButton = new JButton("View all");
-        JButton settingsButton = new JButton();
 
         ImageIcon addIcon = createIcon("addIcon32.png");
         ImageIcon editIcon = createIcon("editIcon32.png");
         ImageIcon deleteIcon = createIcon("deleteIcon32.png");
         ImageIcon searchIcon = createIcon("searchIcon32.png");
-        ImageIcon settingsIcon = createIcon("settingsIcon32.png");
 
         addPatientButton.setIcon(addIcon);
         editPatientButton.setIcon(editIcon);
         deletePatientButton.setIcon(deleteIcon);
         searchPatientButton.setIcon(searchIcon);
-        settingsButton.setIcon(settingsIcon);
 
         addPatientButton.setToolTipText("Add patient");
         editPatientButton.setToolTipText("Edit patient");
         deletePatientButton.setToolTipText("Delete patient");
         searchPatientButton.setToolTipText("Search patient");
-        settingsButton.setToolTipText("Settings");
 
         buttonsPanel.add(addPatientButton);
         buttonsPanel.add(editPatientButton);
         buttonsPanel.add(deletePatientButton);
         buttonsPanel.add(searchPatientButton);
         buttonsPanel.add(viewAllButton);
-        buttonsPanel.add(new JSeparator(SwingConstants.VERTICAL));
-        buttonsPanel.add(settingsButton);
 
         parent.setLayout(new BorderLayout());
         parent.add(buttonsPanel, BorderLayout.NORTH);

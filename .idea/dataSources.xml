@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3644007758">
-    <data-source source="LOCAL" name="Data Source" product="Apache Derby" version="10.8.3.0 - (1405108)" jdbc-version="4.0" driver-name="Apache Derby Embedded JDBC Driver" driver-version="10.8.3.0 - (1405108)" uuid="b8b7a768-2a18-46fc-a2f8-303836e3fb5b">
+  <component name="DataSourceManagerImpl" format="xml" hash="1631524909">
+    <data-source source="LOCAL" name="PolyclinicDB" product="Apache Derby" version="10.8.3.0 - (1405108)" jdbc-version="4.0" driver-name="Apache Derby Embedded JDBC Driver" driver-version="10.8.3.0 - (1405108)" uuid="b8b7a768-2a18-46fc-a2f8-303836e3fb5b">
       <identifier-quote-string>&quot;</identifier-quote-string>
-      <synchronize>true</synchronize>
       <jdbc-driver>org.apache.derby.jdbc.EmbeddedDriver</jdbc-driver>
-      <jdbc-url>jdbc:derby:PolyclinicDataBase</jdbc-url>
+      <jdbc-url>jdbc:derby:PolyclinicDB</jdbc-url>
       <schema-pattern>*</schema-pattern>
       <libraries>
         <library>
-          <url>jar://$PROJECT_DIR$/db/lib/derby.jar!/</url>
+          <url>jar://$PROJECT_DIR$/lib/derby/derby.jar!/</url>
         </library>
       </libraries>
     </data-source>

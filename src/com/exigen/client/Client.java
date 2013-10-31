@@ -73,8 +73,11 @@ public class Client {
                     case REQUEST_ALL_LISTS:
                         return objInp.readObject();
                     case REQUEST_PATIENTS_LIST:
+                        objOut.writeObject(param);
+                        objOut.flush();
                         return objInp.readObject();
                     case REQUEST_DOCTORS_LIST:
+                        objOut.writeObject(param);
                         return objInp.readObject();
                     case REQUEST_RECORDS_LIST:
                         return objInp.readObject();

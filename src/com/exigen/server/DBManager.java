@@ -14,19 +14,11 @@ import java.util.logging.Logger;
 public class DBManager {
     private Connection conn;
     private String driver;
-    private String dbName;
     private Logger logger;
-    private String patientsTableName;
-    private String doctorsTableName;
-    private String recordsTableName;
 
     protected DBManager() {
         logger = ServerLogger.getInstance().getLogger();
         driver = "org.apache.derby.jdbc.EmbeddedDriver";
-        dbName = "PolyclinicDataBase";
-        patientsTableName = "PATIENTS_TABLE";
-        doctorsTableName = "DOCTORS_TABLE";
-        recordsTableName = "RECORDS_TABLE";
         connect();
     }
 
@@ -34,7 +26,7 @@ public class DBManager {
      * Establish connection to DB with a specified name (dbName)
      */
     private void connect() {
-        String connectionURL = "jdbc:derby:" + dbName;
+        String connectionURL = "jdbc:derby:PolyclinicDB";
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(connectionURL);
@@ -104,7 +96,9 @@ public class DBManager {
      * @return Record list
      */
     protected ArrayList<Record> getRecordsList() throws SQLException {
-        ArrayList<Record> recordsList = new ArrayList<Record>();
+        //todo
+        //fix query
+        ArrayList<Record> result = new ArrayList<Record>();
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         try {
@@ -112,27 +106,31 @@ public class DBManager {
             Patient patient;
             Doctor doctor;
             java.util.Date date;
-            String query = "SELECT doctor_name, doctor_surname, room, specialization, " +
+            /*String query = "SELECT doctor_name, doctor_surname, room, specialization, " +
                     "patient_name, patient_surname, district, diagnosis, insurance_id , rec_date " +
                     "FROM records, doctors, patients " +
                     "WHERE records.doctor_id=doctors.doctor_id " +
-                    "AND records.patient_id=patients.patient_id";
+                    "AND records.patient_id=patients.patient_id";*/
+            String query = "select * from records";
             rs = stmt.executeQuery(query);
+            int i=0;
             while (rs.next()) {
-                doctor = new Doctor(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
+                /*doctor = new Doctor(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
                 patient = new Patient(rs.getString(5), rs.getString(6), rs.getString(7),
                         rs.getString(8), rs.getInt(9));
                 date = rs.getDate(10);
                 record = new Record(doctor, patient, date);
-                recordsList.add(record);
+                result.add(record);*/
+                i++;
             }
+            System.out.println("" + i + " record(s) found!");
         } finally {
             if (rs != null) {
                 rs.close();
             }
             stmt.close();
         }
-        return recordsList;
+        return result;
     }
 
 
@@ -154,7 +152,8 @@ public class DBManager {
         String query = "SELECT COUNT(patient_id) FROM records WHERE patient_id=" +
                 patient.getId() + " AND rec_date>='" + sqlCurrentDate + "'";
         ResultSet rs = stmt.executeQuery(query);
-        if (!rs.next() || rs.getInt(1) == 0)
+        System.out.println("");
+        if (!rs.next() || rs.getInt(1) > 0)
             return false;
         try {
             String update =
@@ -186,7 +185,7 @@ public class DBManager {
         String query = "SELECT COUNT(doctor_id) FROM records WHERE doctor_id=" +
                 doctor.getId() + " AND rec_date>='" + sqlCurrentDate + "'";
         ResultSet rs = stmt.executeQuery(query);
-        if (!rs.next() || rs.getInt(1) == 0)
+        if (!rs.next() || rs.getInt(1) > 0)
             return false;
         try {
             String update =
@@ -226,6 +225,8 @@ public class DBManager {
      * @throws SQLException
      */
     protected ArrayList<Patient> search(Patient searchParam) throws SQLException {
+        //todo
+        //refactor with prepared statement
         if (searchParam == null)
             return getPatientsList();
         ArrayList<Patient> result = new ArrayList<Patient>();
@@ -273,10 +274,12 @@ public class DBManager {
                 }
                 rs = stmt.executeQuery(queryBase + appendix);
                 while (rs.next()) {
+
                     p = new Patient(rs.getString(2), rs.getString(3), rs.getString(4),
                             rs.getString(5), rs.getInt(6));
                     p.setId(rs.getInt(1));
                     result.add(p);
+                    System.out.println("" + result.size() + " patient(s) found!");
                 }
             }
         } finally {
@@ -296,6 +299,8 @@ public class DBManager {
      * @throws SQLException
      */
     protected ArrayList<Doctor> search(Doctor searchParam) throws SQLException {
+        //todo
+        //refactor with prepared statement
         if (searchParam == null)
             return getDoctorsList();
         ArrayList<Doctor> result = new ArrayList<Doctor>();
@@ -308,6 +313,7 @@ public class DBManager {
         String specialization = searchParam.getSpecialization();
         String query = null;
         try {
+            //creates query if all fields defined
             if (name != null && surname != null && specialization != null &&
                     !name.equals("") && !surname.equals("") &&
                     room != 0 && !specialization.equals("")) {
@@ -315,6 +321,7 @@ public class DBManager {
                         "' AND doctor_surname='" + surname + "' AND room=" + room +
                         " AND specialization='" + specialization + "'";
             } else {
+                //creates query by single field
                 if (name != null && !name.equals(""))
                     query = "SELECT * FROM doctors" +
                             " WHERE doctor_name='" + name + "'";
@@ -327,11 +334,13 @@ public class DBManager {
                     query = "SELECT * FROM doctors" +
                             " WHERE specialization='" + specialization + "'";
             }
+            System.out.println("search doctor: leaving query constructor block");
             if (query != null) {
                 rs = stmt.executeQuery(query);
                 while (rs.next()) {
                     d = new Doctor(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
                     result.add(d);
+                    System.out.println("" + result.size() + " doctor(s) found!");
                 }
             }
         } finally {
@@ -469,6 +478,7 @@ public class DBManager {
      */
     private void createTables() throws SQLException {
         Statement stmt = conn.createStatement();
+        String database = "CREATE SCHEMA polyclinic";
         String patientTable = "CREATE TABLE patients (" +
                 "patient_id INT NOT NULL GENERATED ALWAYS AS IDENTITY," +
                 "patient_name VARCHAR(20) NOT NULL," +
@@ -491,6 +501,7 @@ public class DBManager {
                 "patient_id INT NOT NULL," +
                 "rec_date DATE," +
                 "PRIMARY KEY (record_id))";
+        stmt.executeUpdate(database);
         stmt.executeUpdate(patientTable);
         stmt.executeUpdate(doctorTable);
         stmt.executeUpdate(recordTable);
@@ -507,9 +518,10 @@ public class DBManager {
         System.out.println("tables dropped");
     }
 
-    /*public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException {
         DBManager d = new DBManager();
-        d.dropTables();
-        d.createTables();
-    }*/
+        System.out.println(d.getPatientsList().size());
+        System.out.println(d.getDoctorsList().size());
+        System.out.println(d.getRecordsList().size());
+    }
 }

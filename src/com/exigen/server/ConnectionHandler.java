@@ -38,8 +38,9 @@ public class ConnectionHandler implements Runnable {
     public void run() {
         try {
             System.out.println("Client handler started");
+            int request;
             while (trigger) {
-                int request = objInp.readInt();
+                request = objInp.readInt();
                 sendResponse(request);
             }
         } catch (IOException e) {
@@ -70,22 +71,19 @@ public class ConnectionHandler implements Runnable {
             case REQUEST_ALL_LISTS: {
                 ArrayList result = new ArrayList();
                 result.add(dbManager.getPatientsList());
-                System.out.println("patient list done");
                 result.add(dbManager.getDoctorsList());
-                System.out.println("doctor list done");
                 result.add(dbManager.getRecordsList());
-                System.out.println("record list done");
                 objOut.writeObject(result);
                 objOut.flush();
                 break;
             }
             case REQUEST_PATIENTS_LIST: {
-                objOut.writeObject(dbManager.getPatientsList());
+                objOut.writeObject(dbManager.search((Patient) objInp.readObject()));
                 objOut.flush();
                 break;
             }
             case REQUEST_DOCTORS_LIST: {
-                objOut.writeObject(dbManager.getDoctorsList());
+                objOut.writeObject(dbManager.search((Doctor) objInp.readObject()));
                 objOut.flush();
                 break;
             }
@@ -157,6 +155,12 @@ public class ConnectionHandler implements Runnable {
             case REQUEST_SEARCH_PATIENT: {
                 Patient param = (Patient) objInp.readObject();
                 objOut.writeObject(dbManager.search(param));
+                objOut.flush();
+                break;
+            }
+            case REQUEST_SEARCH_DOCTOR: {
+                System.out.println("directing param into dbmanager");
+                objOut.writeObject(dbManager.search((Doctor) objInp.readObject()));
                 objOut.flush();
                 break;
             }
